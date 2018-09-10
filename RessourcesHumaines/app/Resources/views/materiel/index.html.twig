@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'materiel/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Formations
+            <small>Elaboration du plan de Formation</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
+            <li class="active">Elaboration du plan de Formation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+    <h1>Materiel list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nommateriel</th>
+                <th>Quantite</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for materiel in materiels %}
+            <tr>
+                <td><a href="{{ path('materiel_show', { 'id': materiel.id }) }}">{{ materiel.id }}</a></td>
+                <td>{{ materiel.nomMateriel }}</td>
+                <td>{{ materiel.quantite }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('materiel_show', { 'id': materiel.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('materiel_edit', { 'id': materiel.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('materiel_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

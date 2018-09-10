@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'formateurretenu/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Formations
+            <small>Elaboration du plan de Formation</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
+            <li class="active">Elaboration du plan de Formation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+    <h1>FormateurRetenu list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formateurRetenu in formateurRetenus %}
+            <tr>
+                <td><a href="{{ path('formateurretenu_show', { 'id': formateurRetenu.id }) }}">{{ formateurRetenu.id }}</a></td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('formateurretenu_show', { 'id': formateurRetenu.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('formateurretenu_edit', { 'id': formateurRetenu.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('formateurretenu_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

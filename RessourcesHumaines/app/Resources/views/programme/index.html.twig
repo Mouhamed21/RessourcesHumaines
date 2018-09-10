@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Programme list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Datedebutprogramme</th>
+                <th>Datefinprogramme</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for programme in programmes %}
+            <tr>
+                <td><a href="{{ path('formation_show_show', { 'id': programme.id }) }}">{{ programme.id }}</a></td>
+                <td>{{ programme.libelle }}</td>
+                <td>{% if programme.datedebutprogramme %}{{ programme.datedebutprogramme|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if programme.datefinprogramme %}{{ programme.datefinprogramme|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('formation_show_show', { 'id': programme.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('formation_show_edit', { 'id': programme.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('formation_show_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

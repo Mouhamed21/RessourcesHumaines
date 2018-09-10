@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'employe/inc/sidebar.html.twig' %}
+{% endblock %}
+{% block body %}
+     <section class="content">
+         <div class="row">
+             <div class="container-fluid">
+                 {{ form_start(form) }}
+                 {{ form_widget(form) }}
+                 {{ form_end(form) }}
+             </div>
+         </div>
+     </section>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'etatformation/inc/header.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Paramétrage
+            <small>Paramétrage Liés aux Formations</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-gear"></i>Paramétrage</a></li>
+            <li class="active">Paramétrer Formations</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+<div class="text-center">
+     <h1>AJOUT D'UN ETAT DE FORMATIONS</h1>
+</div>
+    <div align="right">
+         <a class="btn btn-primary" href="{{ path('parametrage_etatformation_index') }}" style="margin-bottom:10px;">Retour</a>
+    </div>
+    {{ form_start(form) }}
+          <div class="form-group">
+    <label>Etat Formation</label>
+        {{ form_widget(form.nometatformation) }}
+     </div>
+        <input type="submit" value="Enregistrer" class="btn btn-primary" style="margin-top:10px;" />
+
+    {{ form_end(form) }}
+</section>
+{% endblock %}

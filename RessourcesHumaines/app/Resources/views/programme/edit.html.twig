@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'programme/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Formations
+            <small>Elaboration du plan de Formation</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
+            <li class="active">Elaboration du plan de Formation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+    <h1>Modifier le Programme </h1>
+    <div align="right">
+         <a class="btn btn-primary" href="{{ path('formation_show', { 'id': formation.idfor }) }}" style="margin-bottom:10px;">Retour</a>
+    </div>
+    {{ form_start(edit_form) }}
+     <div class="form-group">
+    <label>Libelle</label>
+        {{ form_widget(edit_form.libelle) }}
+     </div>
+      <div class="form-group">
+    <label>Date Début</label>
+        {{ form_widget(edit_form.datedebutprogramme) }}
+     </div>
+     <div class="form-group">
+    <label>Date Fin</label>
+        {{ form_widget(edit_form.datefinprogramme) }}
+     </div>
+        <input type="submit" value="Enregistrer" class="btn btn-primary" style="margin-top:10px;" />
+   
+    {{ form_end(edit_form) }}
+</section>
+{% endblock %}

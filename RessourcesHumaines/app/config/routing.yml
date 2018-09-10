@@ -1,0 +1,37 @@
+app_formateur_retenu:
+    resource: "@AppBundle/Controller/FormateurRetenuController.php"
+    type:     annotation
+
+app_formateur:
+    resource: "@AppBundle/Controller/FormateurController.php"
+    type:     annotation
+
+app_formation:
+    resource: "@AppBundle/Controller/FormationController.php"
+    type:     annotation
+
+app_formation:
+    resource: "@AppBundle/Controller/FormationController.php"
+    type:     annotation
+
+app_etat_formation:
+    resource: "@AppBundle/Controller/EtatFormationController.php"
+    type:     annotation
+
+app_type_formation:
+    resource: "@AppBundle/Controller/TypeFormationController.php"
+    type:     annotation
+
+app_formation:
+    resource: "@AppBundle/Controller/FormationController.php"
+    type:     annotation
+
+app_evaluation_employe:
+    resource: "@AppBundle/Controller/EvaluationEmployeController.php"
+    type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

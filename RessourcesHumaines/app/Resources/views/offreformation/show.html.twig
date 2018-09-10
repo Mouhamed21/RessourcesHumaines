@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'offreformation/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Formations
+            <small>Elaboration du plan de Formation</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
+            <li class="active">Elaboration du plan de Formation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+  <div class="col-xs-12" >
+            {% for success_message in app.session.flashbag.get('message5') %}
+                <div class="alert alert-success alert-dismissible" style="margin-top: 10px">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i>{{ success_message }}</h4>
+                </div>
+            {% endfor %}
+            {% for success_message in app.session.flashbag.get('message3') %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> {{ success_message }}</h4>
+                </div>
+            {% endfor %}
+        </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="box-title">Détails de L'Appel d'Offre de Formation :  {{ offreFormation.intitule }}</h4>
+                </div>
+               
+                <!-- /.box-header -->
+                <div class="box-body">
+                        <p class="row">
+                            <p class="col-lg-12 col-xs-12">
+                            <p class="list-group">
+                            <P class="list-group-item"><b>Intitule</b> : {{ offreFormation.intitule  }}</P>
+                            <P class="list-group-item"><b>Budget</b> : {{ offreFormation.budget  }}</P>
+                            <P class="list-group-item"><b>Theme</b> : {{ offreFormation.theme  }}</P>
+                            <P class="list-group-item"><b>Début d'Appel d'Offre</b> :{% if offreFormation.datedebutoffre %}{{ offreFormation.datedebutoffre|date('Y-m-d') }}{% endif %}</P>
+                            <P class="list-group-item"><b>Date Fin Appel D'Offre</b> :{% if offreFormation.datefinoffre %}{{ offreFormation.datefinoffre|date('Y-m-d') }}{% endif %}</P>
+                            <P> 
+                             <a title="Retour à la liste des Appels d'Offre" href="{{ path('formation_show', { 'id': formation.idfor }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                             <a title="Modifier" href="{{ path('offreformation_edit', { 'id': offreFormation.id }) }}" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></a>
+                              <button title="Supprimer" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal{{ offreFormation.id }}">
+                                     <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            
+                             </P>
+                             </P>
+                             </P>
+                        </p>
+                            <P>
+                             <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">Liste des Formateurs Retenus</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="example4" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom Formateur</th>
+                                            <th>Prenom Formateur</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for formateurRetenu in formateurRetenus %}
+                                        <tr>
+                                
+                                            <td>
+                                                {{ formateurRetenu.nomformateur}}
+                                            </td>
+                                            <td>
+                                                {{ formateurRetenu.prenomformateur}}
+                                            </td>
+                                            <td align="center">                                           
+                                                <a href="{{ path('formateurretenu_show', { 'id': formateurRetenu.idfr }) }}" 
+                                                class="btn btn-facebook btn-sm">
+                                                <span class="glyphicon glyphicon-list"></span></a>
+                                            
+                                                <a href="{{ path('formateurretenu_edit', { 'id': formateurRetenu.idfr }) }}" 
+                                                class="btn btn-success btn-sm">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                </div>
+                                <div class="text-center">
+                                    <button  title="Ajouter Un Formateur" type="button" class="btn btn-primary" data-toggle="modal" 
+                                    data-target="#myModalT{{ offreFormation.id }}">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            </P>
+                            
+                    <div class="modal fade" id="myModal{{offreFormation.id }}" tabindex="-1" role="dialog"aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ offreFormation.Intitule }} </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                                    {{ form_start(delete_form) }}
+                                        <input type="submit" class="btn btn-danger" value="Oui">
+                                    {{ form_end(delete_form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+    <div class="modal fade" id="myModalT{{ offreFormation.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Ajout d'une Nationalité</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-title" id="myModalLabel">
+                        {{ form_start(form1) }}
+
+                    <div class="form-group">
+                        <label>Choisir Formateur Retenu</label>
+                        {{ form_widget(form1.nomformateur) }}
+                    </div>
+
+                    </p>
+                    <br/>
+                    <h4><p>
+                            Si le formateur ne figure pas sur la liste déroulante veuillez l'ajouter<br/>
+                            en<a href="{{ path('formateur_new') }}">
+                                Cliquant ici
+                            </a>
+                        </p>
+                    </h4>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        {{ form_widget(form1.save) }}
+                    </div>
+                    {{ form_end(form1) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+            </div>
+                             
+                            
+                </div>
+            </div>
+        </div>
+    
+   
+</section>
+{% endblock %}

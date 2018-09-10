@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>OffreFormation list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Intitule</th>
+                <th>Budget</th>
+                <th>Theme</th>
+                <th>Datedebutoffre</th>
+                <th>Datefinoffre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for offreFormation in offreFormations %}
+            <tr>
+                <td><a href="{{ path('offreformation_show', { 'id': offreFormation.id }) }}">{{ offreFormation.id }}</a></td>
+                <td>{{ offreFormation.intitule }}</td>
+                <td>{{ offreFormation.budget }}</td>
+                <td>{{ offreFormation.theme }}</td>
+                <td>{% if offreFormation.datedebutoffre %}{{ offreFormation.datedebutoffre|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if offreFormation.datefinoffre %}{{ offreFormation.datefinoffre|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('offreformation_show', { 'id': offreFormation.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('offreformation_edit', { 'id': offreFormation.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('offreformation_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

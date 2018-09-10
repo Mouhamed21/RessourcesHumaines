@@ -1,0 +1,3 @@
+rh_homepage:
+    path:     /
+    defaults: { _controller: RhBundle:Default:index }

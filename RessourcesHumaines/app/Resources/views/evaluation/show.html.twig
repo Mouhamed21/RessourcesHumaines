@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'evaluation/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Carrières et Compétences
+            <small>Evaluation du Personnel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Carrières et Compétences</a></li>
+            <li class="active">Evaluation du Personnel</li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+<section class="content">
+    <h3>Evaluation</h3>
+   <div class="text-right" xmlns="http://www.w3.org/1999/html">
+        <a class="btn btn-primary" style="margin-bottom: 10px;" 
+        href="{{ path('evaluation_index') }}">Retourner à la liste des Evaluations</a>
+    </div>
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Détails de l'Evaluation {{ evaluation.nomEvaluation }}</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Nomevaluation</th>
+                                <th>Datedebut</th>
+                                <th>Datefin</th>
+                                <th>Description</th>
+                                <th>Type D'Evaluation</th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr>
+                                <td>{{ evaluation.nomEvaluation }}</td>
+                                <td>{% if evaluation.datedebut %}{{ evaluation.datedebut|date('Y-m-d') }}{% endif %}</td>
+                                <td>{% if evaluation.datefin %}{{ evaluation.datefin|date('Y-m-d') }}{% endif %}</td>
+                                <td>{{ evaluation.description }}</td>
+                                
+                                <td>{{ evaluations.nomTypeEvaluation }}</td>
+                               
+                                <td align="center">
+                                    <a title="Modifier" href="{{ path('evaluation_edit', { 'id': evaluation.id }) }}" class="btn btn-success btn-sm">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                    <button title="Supprimer" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal{{ evaluation.id }}">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal{{ evaluation.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ evaluation.nomEvaluation }} </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                                    {{ form_start(delete_form) }}
+                                                        <input type="submit" class="btn btn-danger" value="Oui">
+                                                    {{ form_end(delete_form) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'formateurretenu/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Formations
+            <small>Elaboration du plan de Formation</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
+            <li class="active">Elaboration du plan de Formation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+<div class="text-center">
+    <h1>Formateur Retenu</h1>
+</div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="box-title">Détails du Formateur {{ formateurRetenus.prenomformateur }}  {{ formateurRetenus.nomformateur }}</h4>
+                </div>
+               
+                <!-- /.box-header -->
+                <div class="box-body">
+                        <p class="row">
+                            <p class="col-lg-12 col-xs-12">
+                            <p class="list-group">
+                            <P class="list-group-item"><b>Nom</b> : {{ formateurRetenus.nomformateur }}</P>
+                            <P class="list-group-item"><b>Prenom</b> : {{formateurRetenus.prenomformateur }}</P>
+                            <P class="list-group-item"><b>Fonction</b> : {{ formateurRetenus.fonction }}</P>
+                            <P class="list-group-item"><b>Telephone</b> : {{ formateurRetenus.telephone }}</P>
+                            <P class="list-group-item"><b>Email</b> : {{ formateurRetenus.email }}</P>
+                            <P class="list-group-item"><b>Boite Postale</b> : {{ formateurRetenus.boitepostale }}</P>
+                            <P class="list-group-item"><b>Codereference</b> : {{ formateurRetenus.codereference }}</P>
+                            <P class="list-group-item"><b>Theme Seminaire</b> : {{ formateurRetenus.themeseminaire }}</P>
+                            <P class="list-group-item"><b>Tarif par semaine</b> : {{ formateurRetenus.tarifsemaine }} fcfa</P>
+
+                            <P> 
+                              <a title="Retour à la liste des Formateurs" href="{{ path('offreformation_show', { 'id': offreformation.idoff }) 
+                }}" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span></a>
+       
+            <a title="Modifier" href="{{ path('formateurretenu_edit', { 'id': formateurRetenu.id }) }}"  class="btn btn-success" >
+            <span class="glyphicon glyphicon-edit">
+
+            </span></a>
+             <button title="Supprimer" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal{{ formateurRetenu.id }}">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>    
+            <div class="modal fade" id="myModal{{formateurRetenu.id }}" tabindex="-1" role="dialog"aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ formateurRetenus.prenomformateur }} {{ formateurRetenus.nomformateur }} </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                                    {{ form_start(delete_form) }}
+                                        <input type="submit" class="btn btn-danger" value="Oui">
+                                    {{ form_end(delete_form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </P>
+   
+    
+           </div>
+         </div>
+         </div>
+
+     
+    
+    </div>
+</content>
+{% endblock %}

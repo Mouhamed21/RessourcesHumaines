@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'typeevaluation/inc/header.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Paramétrage
+            <small>Paramétrage Liés aux Evaluations</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-gear"></i>Paramétrage</a></li>
+            <li class="active">Paramétrer Evaluation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+    <div class="text-center">
+        <h1>LES TYPES D'EVALUATIONS</h1>
+    </div>
+    
+     <a href="{{ path('parametrage_evaluation_new') }}" class="btn btn-primary" style="margin-bottom: 10px">
+     <b>AJOUTER UN TYPE D'EVALUATION</b> </a>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">LISTE DES TYPES D'EVALUATIONS</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Type Evaluation</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for typeEvaluation in typeEvaluations %}
+                            <tr>
+                                <td>{{ typeEvaluation.nomTypeEvaluation }}</td>
+
+                                <td align="center">
+                                    <a title="Détail" href="{{ path('parametrage_evaluation_show', { 'id': typeEvaluation.id }) }}" class="btn btn-primary btn-sm"
+                                    >
+                                        <span class="glyphicon glyphicon-list"></span>
+                                    </a>
+                                    <a title="Modifier" href="{{ path('parametrage_evaluation_edit', { 'id': typeEvaluation.id }) }}" class="btn btn-success btn-sm">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <div>
+</section>
+{% endblock %}

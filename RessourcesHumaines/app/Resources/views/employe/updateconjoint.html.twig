@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'employe/inc/sidebar.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Administration du personnel
+            <small>Gestion des Employés</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-pie-chart"></i>Administration du Personnel</a></li>
+            <li>Employés</li>
+            <li class="active">Modifier Conjoint</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+        <div class="container-fluid">
+            <div class="text-right">
+
+                <a href="{{ absolute_url(asset(''))  }}app_dev.php/employe" class="btn btn-primary">Retour</a>
+                <a href="{{ path('employe')}}"><span class="glyphicon glyphicon-arrow-left -font-awesome"></span></a>
+
+            </div>
+            <h3>MODIFIER EMPLOYE</h3>
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+
+                    </div>
+                </div>
+                <!-- /.box-header -->
+               <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="modal-title" id="myModalLabel">
+                                {{ form_start(form) }}
+                            <div class="form-group">
+                                <label>Nom</label>
+                                {{ form_widget(form.nomConjoint) }}
+                            </div>
+                            <div class="form-group">
+                                <label>Prenom</label>
+                                {{ form_widget(form.prenomConjoint) }}
+
+                            </div>
+                            <div class="form-group">
+                                <label>Naissance</label>
+                                {{ form_widget(form.dateNaissance) }}
+
+                            </div>
+                            <div class="form-group">
+                                <label>Situation Matrimoniale</label>
+                                {{ form_widget(form.SituationMatrimoniale) }}
+
+                            </div>
+                            <div class="form-group">
+                                <label>Raison Inactif</label>
+                                {{ form_widget(form.raisonInactif) }}
+
+                            </div>
+                            <div class="form-group">
+                                <label>Situation Professionelle</label>
+                                {{ form_widget(form.situationProfessionnelle) }}
+
+                            </div>
+                            </p>
+                            <br/>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+
+                                {{ form_widget(form.save) }}
+                            </div>
+                            {{ form_end(form) }}
+
+                            </p>
+                        </div>
+
+                <!-- /.box-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+
+            </div>
+            <!-- /.row -->
+        </div>
+
+
+</section>
+{% endblock %}

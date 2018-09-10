@@ -1,0 +1,1313 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'employe/inc/sidebar.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header" xmlns="http://www.w3.org/1999/html">
+        <h1>
+            Administration du personnel
+            <small>Gestion des Employés</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-pie-chart"></i>Administration du Personnel</a></li>
+            <li>Employés</li>
+            <li class="active">Visualiser Employé</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+    <section class="content" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+        <div class="text-right" xmlns="http://www.w3.org/1999/html">
+            <a href="{{ absolute_url(asset('')) }}app_dev.php/employe" class="btn btn-primary" style="margin-right: 16px;">
+                Retour</a>
+        </div>
+
+        <div class="col-xs-12">
+            {% for success_message in app.session.flashbag.get('message') %}
+                <div class="alert alert-success alert-dismissible" style="margin-top: 10px">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i>{{ success_message }}</h4>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-xs-12">
+            {% for success_message in app.session.flashbag.get('message3') %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> {{ success_message }}</h4>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="container-fluid" style="margin-top: 20px;">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h4>Détails de l'Employé {{ employe.prenom }} {{ employe.nom }}</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div id="accordioninpanel" class="accordion-group">
+                                <div class="accordion-item">
+                                    <a class="accordion-title" data-toggle="collapse" data-parent="#accordioninpanel" href="#collapseinOne">
+                                        <h4>Informations Personnelles
+                                        </h4></a>
+                                    <div id="collapseinOne" class="collapsein">
+                                        <div class="accordion-body">
+
+                                            <!--<P class="list-group-item">Nom: {{ employe.nom }}</P>
+                                                        <P class="list-group-item">Prenom: {{ employe.prenom }}</P>-->
+                                            <p class="row">
+                                            <p class="col-lg-12 col-xs-12">
+                                            <p class="list-group">
+                                            <P class="list-group-item"><b>Sexe</b> : {{ employe.sexe }}</P>
+                                            <P class="list-group-item"> <b>Matricule </b> : {{ employe.matricule }}</P>
+                                           
+                                            <P class="list-group-item"><b>Date de Naissance </b> : {{ employe.dateNaissance | date("m/d/Y") }}</P>
+                                            <P class="list-group-item"><b>Situation Matrimoniale </b> : {{ employe.situationMatri }}</P>
+                                            <P class="list-group-item"><b>Date D'embauche</b> : {{ employe.dateEmbauche | date("m/d/Y")}}</P>
+                                            <P class="list-group-item"><b>Lieu de Naissance</b> : {{ employe.lieuNaissance }}</P>
+
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    <p>
+                                                        <button class="btn btn-primary " type="button" data-toggle="collapse" data-target="#multiCollapseExample3"
+                                                                aria-expanded="true" aria-controls="multiCollapseExample2">Nationalité</button>
+                                                        <a class="btn btn-primary"  data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="true" aria-controls="multiCollapseExample1"><span class="glyphicon glyphicon-eye-open"></span>
+                                                            {% if(employe.sexe == 'M') %}
+                                                                {% if(conjoints >1) %}
+                                                                        Conjointes
+                                                                {% else %}
+                                                                        Conjointe
+                                                                {% endif %}
+                                                            {% else %}
+                                                                        Conjoint
+                                                            {% endif %}
+                                                        </a>
+                                                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2"><span class="glyphicon glyphicon-eye-open"></span> Enfants</button>
+                                                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Ouvrir ou Fermer</button>
+                                                    </p>
+                                                    <div class="modal fade" id="myModalH{{ employe.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel">Ajout d'un Conjoint</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p class="modal-title" id="myModalLabel">
+                                                                        {{ form_start(form7) }}
+
+                                                                <div class="form-group">
+                                                                    <label>Nom</label>
+                                                                    {{ form_widget(form7.nomConjoint) }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Prenom</label>
+                                                                    {{ form_widget(form7.prenomConjoint) }}
+
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Naissance</label>
+                                                                    {{ form_widget(form7.dateNaissance) }}
+
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Situation Matrimoniale</label>
+                                                                    {{ form_widget(form7.SituationMatrimoniale) }}
+
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Raison Inactif</label>
+                                                                    {{ form_widget(form7.raisonInactif) }}
+
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Situation Professionelle</label>
+                                                                    {{ form_widget(form7.situationProfessionnelle) }}
+
+                                                                </div>
+                                                                </p>
+                                                                <br/>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div class="row">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                                    {{ form_widget(form7.save) }}
+                                                                </div>
+                                                                {{ form_end(form7) }}
+
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                                                <div class="card card-body">
+                                                                    {% if (conjoints != null) %}
+                                                                        <div class="col-xs-12">
+                                                                            <P class="list-group-item"><b>Conjoint</b> :
+
+                                                                            <div class="box box-primary">
+
+                                                                                <div class="box-header">
+                                                                                    <h3 class="box-title">Liste des Conjoints</h3>
+                                                                                </div>
+                                                                                <!-- /.box-header -->
+                                                                                <div class="box-body">
+                                                                                    <table id="example1" class="table table-bordered table-striped">
+                                                                                        <thead>
+                                                                                        <tr>
+                                                                                            <th>Nom</th>
+                                                                                            <th>Prenom</th>
+                                                                                            <th>Date de Naissance</th>
+                                                                                            <th>Situation Matrimoniale</th>
+                                                                                            <th>Raison Inactif</th>
+                                                                                            <th>Actions</th>
+                                                                                        </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                        {% for conjoint1 in conjoint %}
+                                                                                            <tr>
+
+                                                                                                <td> {{ conjoint1.prenomConjoint }}</td>
+                                                                                                <td> {{ conjoint1.nomConjoint }}  </td>
+                                                                                                <td>{{ conjoint1.dateNaissance | date("m/d/Y")}}</td>
+                                                                                                <td>{{ conjoint1.SituationMatrimoniale }}</td>
+                                                                                                <td>{{ conjoint1.raisonInactif }}</td>
+                                                                                                <td align="center">
+
+                                                                                                    <a href="{{ path('update_conjoint',{'idemp':conjoint1.idemp, 'id':conjoint1.id }) }}" class="btn btn-success btn-sm">
+                                                                                                        <span class="glyphicon glyphicon-pencil"></span></a>
+
+                                                                                                    <button title="Supprimer" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalCS{{ conjoint1.id }}">
+                                                                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                                <div class="modal fade" id="myModalCS{{ conjoint1.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                                                    <div class="modal-dialog" role="document">
+                                                                                                        <div class="modal-content">
+                                                                                                            <div class="modal-header">
+                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                                <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                                                                                            </div>
+                                                                                                            <div class="modal-body">
+                                                                                                                            <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{conjoint1.prenomConjoint }}</p>
+                                                                                                                        </div>
+                                                                                                                    <div class="modal-footer">
+                                                                                                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                                                                                                        <a href="{{ path('delete_conjoint_employe',{'id':conjoint1.id, 'idemp':conjoint1.idemp  }) }}" class="btn btn-danger">
+                                                                                                                            Oui</a>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+
+                                                                                                        </div>
+                                                                                                      </div>
+
+                                                                                            </tr>
+                                                                                        {% endfor %}
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                {% if(employe.sexe == 'M') %}
+                                                                                    {% if(conjoints <4) %}
+                                                                                        <center><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalH{{ employe.id }}">
+                                                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                                                            </button>
+                                                                                        </center>
+                                                                                    {% else %}
+                                                                                        <h4>Vous avez atteint le nombre maximun de Coinjointes</h4>
+                                                                                    {% endif %}
+                                                                                {% elseif(employe.sexe == 'F') %}
+                                                                                    {% if(conjoints==0) %}
+                                                                                        <center><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalH{{ employe.id }}">
+                                                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                                                            </button></center>
+                                                                                    {% else %}
+                                                                                        <h4>Vous avez atteint le nombre maximun de Coinjoints</h4>
+                                                                                    {% endif %}
+                                                                                {% endif %}
+                                                                            </div>
+                                                                        </div>
+                                                                        </P>
+                                                                    {% else %}
+                                                                        <div class="row">
+                                                                            <div class="col-lg-3 col-xs-6">
+                                                                                <P class="list-group-item">
+                                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalH{{ employe.id }}">
+                                                                                        Ajouter Conjoint
+                                                                                    </button>
+                                                                                </P>
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endif %}
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="collapse multi-collapse" id="multiCollapseExample2">
+                                                            <div class="card card-body">
+
+                                                                <P class="list-group-item"><b>Enfant</b> :
+                                                                <div class="box box-primary">
+                                                                    <div class="box-header">
+                                                                        <h3 class="box-title">Liste des Enfants</h3>
+                                                                    </div>
+                                                                    <!-- /.box-header -->
+                                                                    <div class="box-body">
+                                                                        <table id="example2" class="table table-bordered table-striped">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th>Nom</th>
+                                                                                <th>Prenom</th>
+                                                                                <th>Date de Naissance</th>
+                                                                                <th>Adresse</th>
+                                                                                <th>Sexe</th>
+                                                                                <th>Handicape</th>
+                                                                                <th>Scolariser</th>
+                                                                                <th>Numéro d'identité</th>
+                                                                                <th>Conjoint</th>
+                                                                                <th>Actions</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            {% for enfant in enfants %}
+                                                                                <tr>
+                                                                                    <td> {{ enfant.nomEnfant }}</td>
+                                                                                    <td> {{ enfant.prenomEnfant }}  </td>
+                                                                                    <td>{{ enfant.dateNaissance | date("m/d/Y")}}</td>
+                                                                                    <td>{{ enfant.adresse }}</td>
+                                                                                    <td>{{ enfant.sexeenfant }}</td>
+                                                                                    <td>{{ enfant.handicap }}</td>
+                                                                                    <td>{{ enfant.scolariser }}</td>
+                                                                                    <td>{{ enfant.numeroIdentification }}</td>
+                                                                                    <td>{{ enfant.prenomConjoint }}</td>
+                                                                                    <td align="center">
+                                                                                        <a href="{{ path('update_enfant',{'idenemp':enfant.idenemp, 'idconj':enfant.idconj, 'id':enfant.id }) }}" class="btn btn-success btn-sm">
+                                                                                            <span class="glyphicon glyphicon-pencil"></span></a>
+                                                                                        <button title="Supprimer" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalENC{{ enfant.id }}">
+                                                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                                                        </button>
+                                                                                        <div class="modal fade" id="myModalENC{{ enfant.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                                            <div class="modal-dialog" role="document">
+                                                                                                <div class="modal-content">
+                                                                                                    <div class="modal-header">
+                                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                        <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                                                                                    </div>
+                                                                                                    <div class="modal-body">
+                                                                                                        <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{enfant.nomEnfant }}</p>
+                                                                                                    </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                                                                                        <a href="{{ path('delete_enfant_employe',{'idenemp':enfant.idenemp, 'id':enfant.id  }) }}" class="btn btn-danger">
+                                                                                                            Oui</a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                            {% endfor %}
+
+
+                                                                            </tbody>
+
+                                                                        </table>
+                                                                    </div>
+                                                <center>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal12{{ employe.id }}">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+                                                </center>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal fade" id="myModal12{{ employe.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                <h4 class="modal-title" id="myModalLabel">Ajout d'un Enfant</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p class="modal-title" id="myModalLabel">
+                                                                                    {{ form_start(form8) }}
+                                                                                <div class="form-group">
+                                                                                    <label>Nom</label>
+                                                                                    {{ form_widget(form8.nomEnfant) }}
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Prenom</label>
+                                                                                    {{ form_widget(form8.prenomEnfant) }}
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Naissance</label>
+                                                                                    {{ form_widget(form8.dateNaissance) }}
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Sexe</label>
+                                                                                    {{ form_widget(form8.sexeenfant) }}
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Adresse</label>
+                                                                                    {{ form_widget(form8.adresse) }}
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Handicape</label>
+                                                                                    {{ form_widget(form8.handicap) }}
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Scolariser</label>
+                                                                                    {{ form_widget(form8.scolariser) }}
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>N°:Carte d'identité</label>
+                                                                                    {{ form_widget(form8.numeroIdentification) }}
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Conjoint</label>
+                                                                                    {{ form_widget(form8.conjoint) }}
+
+                                                                                </div>
+
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <div class="row">
+                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                                                    {{ form_widget(form8.save) }}
+                                                                                </div>
+                                                                                {{ form_end(form8) }}
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="multi-collapse collapse in" id="multiCollapseExample3">
+                                                                    <div class="card card-body">
+                                                                        <div class="col-xs-12">
+                                                                            <P class="list-group-item"><b>Nationalité</b> :
+                                                                        <div class="box box-primary">
+
+                                                                            <!-- /.box-header -->
+                                                                            <div class="box-body table-responsive no-padding">
+                                                                                <table class="table table-hover">
+                                                                                    <tr>
+                                                                                        <th>Nationalité</th>
+                                                                                        <th>Actions</th>
+                                                                                    </tr>
+                                                                                    {% for nationalite in nationalites %}
+                                                                                    <tr>
+                                                                                        <td>{{ nationalite.nat }}</td>
+                                                                                        <td align="center">
+                                                                                        <button title="Supprimer" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal150{{ employe.id  }}">
+                                                                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                                                        </button>
+                                                                                        <button title="Supprimer" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalANS{{ nationalite.idnatemp  }}">
+                                                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                                                        </button>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <div class="modal fade" id="myModalANS{{ nationalite.idnatemp }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                                        <div class="modal-dialog" role="document">
+                                                                                            <div class="modal-content">
+                                                                                                <div class="modal-header">
+                                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                    <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                                                                                </div>
+                                                                                                <div class="modal-body">
+                                                                                                    <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ nationalite.nat }}</p>
+                                                                                                </div>
+                                                                                                <div class="modal-footer">
+                                                                                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                                                                                    <a href="{{ path('delete_nationalite_employe',{'id':nationalite.idemp , 'idnatemp':nationalite.idnatemp }) }}" class="btn btn-danger">
+                                                                                                        Oui</a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                         </div>
+
+                                        
+
+                                                                                      {% endfor %}
+
+
+                                                                                    </table>
+                                                                                <center> <button title="Ajouter Nationalité" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAN{{ employe.id }}">
+                                                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                                                    </button></center>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                                                     </div>
+                                                    
+
+                                                        <div class="modal fade" id="myModalAN{{ employe.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                        <h4 class="modal-title" id="myModalLabel">Ajout d'une Nationalité</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p class="modal-title" id="myModalLabel">
+                                                                            {{ form_start(form) }}
+
+                                                                        <div class="form-group">
+                                                                            <label>Choisir Nationalité</label>
+                                                                            {{ form_widget(form.nomNationalite) }}
+                                                                        </div>
+
+                                                                        </p>
+                                                                        <br/>
+                                                                        <h4><p>
+                                                                                Si votre Nationalité ne figure pas sur la liste déroulante veuillez l'ajouter<br/>
+                                                                                en<a href="{{ path('parametrage_employe') }}">
+                                                                                    Cliquant ici
+                                                                                </a>
+                                                                            </p>
+                                                                        </h4>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <div class="row">
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                                            {{ form_widget(form.save) }}
+                                                                        </div>
+                                                                        {{ form_end(form) }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+        </div>
+                </div>
+            </div>
+
+
+
+                                        <div class="accordion-item">
+                                            <a class="accordion-title" data-toggle="collapse" data-parent="#accordioninpanel" href="#collapseinTwo">
+                                                <h4 >Informations Professionelles
+                                                </h4></a>
+                                            <div id="collapseinTwo" class="collapsein">
+                                                <div class="accordion-body "><br>
+
+                                                    <!-- Custom Tabs -->
+                                                    <div class="nav-tabs-custom">
+                                                        <ul class="nav nav-tabs">
+                                                            <li class="active"><a href="#tab_1" data-toggle="tab">Fonction</a></li>
+                                                            <li><a href="#tab_2" data-toggle="tab">Metier</a></li>
+                                                            <li><a href="#tab_3" data-toggle="tab">Etat</a></li>
+                                                            <li><a href="#tab_4" data-toggle="tab">Contrat</a></li>
+                                                            <li><a href="#tab_5" data-toggle="tab">Catégorie</a></li>
+                                                            <li><a href="#tab_6" data-toggle="tab">Service</a></li>
+                                                            <li class="pull-right"><a href="{{ path('parametrage_employe') }}"  class="text-muted"><i title="Allez au paramétrage" class="fa fa-gear"></i></a></li>
+                                                        </ul>
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane active" id="tab_1">
+                                                                <div class="modal fade" id="myModalB{{ employe.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                <h4 class="modal-title" id="myModalLabel">Ajout d'une Fonction</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p class="modal-title" id="myModalLabel">
+                                                                                    {{ form_start(form1) }}
+
+                                                                                <div class="form-group">
+                                                                                    <label>Choisir Fonction</label>
+                                                                                    {{ form_widget(form1.nomfonction) }}
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Date de Debut</label>
+                                                                                    {{ form_widget(form1.datedebutfonction) }}
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Date de Fin</label>
+                                                                                    {{ form_widget(form1.datefin) }}
+
+                                                                                </div>
+                                                                                </p>
+                                                                                <br/>
+                                                                                <h4><p>
+                                                                                        Si votre fonction ne figure pas sur la liste déroulante veuillez l'ajouter<br/>
+                                                                                        en<a href="{{ path('parametrage_employe') }}">
+                                                                                            Cliquant ici
+                                                                                        </a>
+                                                                                    </p>
+                                                                                </h4>
+
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <div class="row">
+                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                                                    {{ form_widget(form1.save) }}
+                                                                                </div>
+                                                                                {{ form_end(form1) }}
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {% if (fonction2 == null) %}
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalB{{ employe.id }}">
+                                                                        Ajouter Fonction
+                                                                    </button>
+                                                                {% else %}
+                                                                    <div class="row">
+                                                                        <div class="col-xs-12">
+                                                                            <div class="box box-primary">
+                                                                                <div class="box-header">
+                                                                                    <h3 class="box-title">Fonction</h3>
+                                                                                </div>
+                                                                                <div class="box-body table-responsive no-padding">
+                                                                                    <table class="table table-hover">
+                                                                                        <tr>
+                                                                                            <th>Fonction</th>
+                                                                                            <th>Date de Debut</th>
+                                                                                            <th>Date de Fin</th>
+                                                                                            <th>Actions</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><h4><span style="width: 140px" class="btn btn-success">{{ fonction2.nomfonction }}</span></h4></td>
+                                                                                            <td><h4><span style="width: 100px" class="btn btn-success">{{ fonction2.datedebutfonction | date("m/d/Y") }}</span></h4></td>
+                                                                                            {%  if(fonction2.datefin == null) %}
+                                                                                                <td><h4><span style="width: 200px" class="btn btn-info">Inconnue Pour le moment</span></h4></td>
+                                                                                            {% else %}
+                                                                                                <td><h4><span style="width: 100px" class="btn btn-success">{{ fonction2.datefin | date("m/d/Y") }}</span></h4></td>
+                                                                                            {% endif %}
+                                                                                            <td align="center"><button title="Changer de Fonction" style="margin-top: 9px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalB{{ employe.id }}">
+                                                                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                                                                </button>
+                                                                                                <button style="margin-top: 10px;" title="Supprimer" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal609{{ fonction2.id}}">
+                                                                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                                                                </button>
+                                                                                                <div class="modal fade" id="myModal609{{ fonction2.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                                                    <div class="modal-dialog" role="document">
+                                                                                                        <div class="modal-content">
+                                                                                                            <div class="modal-header">
+                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                                <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                                                                                            </div>
+                                                                                                            <div class="modal-body">
+                                                                                                                <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ fonction2.nomfonction }}</p>
+                                                                                                            </div>
+                                                                                                            <div class="modal-footer">
+                                                                                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                                                                                                <a href="{{ path('delete_fonction_employe',{'id':fonction2.idemp , 'idfemp':fonction2.idfemp}) }}" class="btn btn-danger">
+                                                                                                                    Oui
+                                                                                                                </a>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    {% endif %}
+                                                                    <div class="box box-warning">
+                                                                        <div class="box-header">
+                                                                            <h3 class="box-title">Historique des Fonctions</h3>
+                                                                        </div>
+                                                                        <!-- /.box-header -->
+                                                                        <div class="box-body">
+                                                                            <table id="example3" class="table table-bordered table-striped">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>Fonctions</th>
+                                                                                    <th>Date de Debut</th>
+                                                                                    <th>Date de Fin</th>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                {% for fonction in fonctions %}
+                                                                                    <tr>
+                                                                                        <td><span>{{ fonction.nomfonction }}</span></td>
+                                                                                        <td><span>{{ fonction.datedebutfonction | date("m/d/Y") }}</span></td>
+                                                                                        {%  if(fonction.datefin == null) %}
+                                                                                            <td><span>Inconnue Pour le moment</span></td>
+                                                                                        {% else %}
+                                                                                            <td><span>{{ fonction.datefin | date("m/d/Y") }}</span></td>
+                                                                                        {% endif %}
+                                                                                    </tr>
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+                                                            </div>
+
+                                                            <!-- /.tab-pane -->
+                                                            <div class="tab-pane" id="tab_2">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12">
+                                                                        <div class="box box-primary">
+                                                                            <div class="box-header">
+                                                                                <h3 class="box-title">Liste des Métiers</h3>
+                                                                            </div>
+                                                                            <!-- /.box-header -->
+                                                                            <div class="box-body">
+                                                                                <table id="example2" class="table table-bordered table-hover">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th>Metier</th>
+                                                                                        <th>Action</th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    {% for metier in metiers %}
+                                                                                        <tr>
+                                                                                            <td><h4><span style="width: 100px" class="btn btn-success">{{ metier.nommetier }}</span></h4></td>
+                                                                                            <td align="center">
+                                                                                                        <button style="margin-top: 10px;" title="Supprimer" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal66{{ metier.idemp }}">
+                                                                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                                                                        </button>
+
+                                                                                                <div class="modal fade" id="myModal66{{ metier.idemp }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                                                    <div class="modal-dialog" role="document">
+                                                                                                        <div class="modal-content">
+                                                                                                            <div class="modal-header">
+                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                                <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                                                                                            </div>
+                                                                                                            <div class="modal-body">
+                                                                                                                <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ metier.nommetier }}</p>
+                                                                                                            </div>
+                                                                                                            <div class="modal-footer">
+                                                                                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                                                                                                <a href="{{ path('delete_metier_employe',{'id':metier.idemp,'idmemp':metier.idmemp }) }}" class="btn btn-danger">
+                                                                                                                    Oui
+                                                                                                                </a>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                            </td>
+
+                                                                                        </tr>
+                                                                                    {% endfor %}
+                                                                                    </tbody>
+                                                                                </table>
+
+                                                                            </div>
+                                                                            <center>
+                                                                                <button title="Ajouter Métier" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalC{{ employe.id }}">
+                                                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                                                </button>
+                                                                            </center>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="modal fade" id="myModalC{{ employe.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                <h4 class="modal-title" id="myModalLabel">Ajout d'un Métier</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p class="modal-title" id="myModalLabel">
+                                                                                    {{ form_start(form2) }}
+                                                                                    {{ form_widget(form2.nommetier) }}
+                                                                                </p>
+                                                                                <br/>
+                                                                                <h4><p>
+                                                                                        Si votre Métier ne figure pas sur la liste déroulante veuillez l'ajouter<br/>
+                                                                                        en<a href="{{ path('parametrage_employe') }}">
+                                                                                            Cliquant ici
+                                                                                        </a>
+                                                                                    </p>
+                                                                                </h4>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <div class="row">
+                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                                                    {{ form_widget(form2.save) }}
+                                                                                </div>
+                                                                                {{ form_end(form2) }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.tab-pane -->
+                                                            <div class="tab-pane" id="tab_3">
+                                                                <div class="modal fade" id="myModalD{{ employe.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                <h4 class="modal-title" id="myModalLabel">Ajout d'un Etat</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p class="modal-title" id="myModalLabel">
+                                                                                    {{ form_start(form3) }}
+                                                                                    {{ form_widget(form3.nometat) }}
+                                                                                <div class="form-group">
+                                                                                    <label>Date de Debut</label>
+                                                                                    {{ form_widget(form3.datedebutetat) }}
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Date de Fin</label>
+                                                                                    {{ form_widget(form3.datefinetat) }}
+
+                                                                                </div>
+
+
+                                                                                </p>
+                                                                                <br/>
+                                                                                <h4><p>
+                                                                                        Si votre Métier ne figure pas sur la liste déroulante veuillez l'ajouter<br/>
+                                                                                        en<a href="{{ path('parametrage_employe') }}">
+                                                                                            Cliquant ici
+                                                                                        </a>
+
+                                                                                    </p>
+                                                                                </h4>
+
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <div class="row">
+                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                                                    {{ form_widget(form3.save) }}
+                                                                                </div>
+                                                                                {{ form_end(form3) }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {% if (etats == null) %}
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalD{{ employe.id }}">
+                                                                        Ajouter d'Etat
+                                                                    </button>
+                                                                {% else %}
+                                                                    <div class="row">
+                                                                        <div class="col-xs-12">
+                                                                            <div class="box box-primary">
+                                                                                <div class="box-header">
+                                                                                    <h3 class="box-title">Etat de L'Employé</h3>
+
+                                                                                </div>
+
+                                                                                <!-- /.box-header -->
+                                                                                <div class="box-body table-responsive no-padding">
+                                                                                    <table class="table table-hover">
+                                                                                        <tr>
+                                                                                            <th>Etat Actuel</th>
+                                                                                            <th>Date de Debut</th>
+                                                                                            <th>Date de Fin</th>
+                                                                                            <th>Actions</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><h4><span style="width: 100px" class="btn btn-success">{{ etats.nometat }}</span></h4></td>
+                                                                                            <td><h4><span style="width: 100px" class="btn btn-success">{{ etats.datedebutetat | date("m/d/Y") }}</span></h4></td>
+                                                                                            {%  if(etats.datefinetat == null) %}
+                                                                                                <td><h4><span style="width: 100px" class="btn btn-info">Inconnue Pour le moment</span></h4></td>
+                                                                                            {% else %}
+                                                                                                <td><h4><span style="width: 100px" class="btn btn-success">{{ etats.datefinetat | date("m/d/Y") }}</span></h4></td>
+                                                                                            {% endif %}
+
+                                                                                            <td align="center">
+                                                                                                <button type="button" style="margin-top: 9px;" class="btn btn-primary" data-toggle="modal" data-target="#myModalD{{ employe.id }}">
+                                                                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                                                                </button>
+                                                                                                <button title="Supprimer" type="button" style="margin-top: 9px;"  class="btn btn-danger" data-toggle="modal" data-target="#myModal849{{ etats.idemp }}">
+                                                                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                                                                </button>
+
+                                                                                                <div class="modal fade" id="myModal849{{ etats.idemp }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                                                    <div class="modal-dialog" role="document">
+                                                                                                        <div class="modal-content">
+                                                                                                            <div class="modal-header">
+                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                                <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                                                                                            </div>
+                                                                                                            <div class="modal-body">
+                                                                                                                <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ etats.nometat }}</p>
+                                                                                                            </div>
+                                                                                                            <div class="modal-footer">
+                                                                                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                                                                                                <a href="{{ path('delete_etat_employe',{'id':etats.idemp , 'idetemp':etats.idetemp }) }}" class="btn btn-danger">
+                                                                                                                    Oui
+                                                                                                                </a>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <!-- /.box-body -->
+                                                                            </div>
+                                                                            <!-- /.box -->
+                                                                        </div>
+                                                                    </div>
+                                                                    {% endif %}
+                                                                    <div class="box box-warning">
+                                                                        <div class="box-header">
+                                                                            <h3 class="box-title">Historique des Etats</h3>
+                                                                        </div>
+                                                                        <!-- /.box-header -->
+                                                                        <div class="box-body">
+                                                                            <table id="example4" class="table table-bordered table-striped">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>Etat</th>
+                                                                                    <th>Date de Debut</th>
+                                                                                    <th>Date de Fin</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                {% for etat2 in etat1 %}
+                                                                                    <tr>
+                                                                                        <td><span >{{ etat2.nometat }}</span></td>
+                                                                                        <td><span>{{ etat2.datedebutetat | date("m/d/Y") }}</span></td>
+                                                                                        {%  if(etat2.datefinetat == null) %}
+                                                                                            <td>Inconnue Pour le moment</td>
+                                                                                        {% else %}
+                                                                                            <td><span>{{ etat2.datefinetat | date("m/d/Y") }}</span></td>
+                                                                                        {% endif %}
+                                                                                    </tr>
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="tab-pane" id="tab_4">
+                                                                <div class="modal fade" id="myModalE{{ employe.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                <h4 class="modal-title" id="myModalLabel">Changer Contrat</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p class="modal-title" id="myModalLabel">
+                                                                                    {{ form_start(form4) }}
+                                                                                    {{ form_widget(form4.nomtypecontrat) }}
+                                                                                <div class="form-group">
+                                                                                    <label>Date de Debut</label>
+                                                                                    {{ form_widget(form4.datedebutcontrat) }}
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label>Date de Fin</label>
+                                                                                    {{ form_widget(form4.datefincontrat) }}
+                                                                                </div>
+                                                                                </p>
+                                                                                <br/>
+                                                                                <h4><p>
+                                                                                        Si le contrat ne figure pas sur la liste déroulante veuillez l'ajouter<br/>
+                                                                                        en<a href="{{ path('parametrage_employe') }}">
+                                                                                            Cliquant ici
+                                                                                        </a>
+                                                                                    </p>
+                                                                                </h4>
+
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <div class="row">
+                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                                                    {{ form_widget(form4.save) }}
+                                                                                </div>
+                                                                                {{ form_end(form4) }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {% if (typecontrats == null) %}
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalE{{ employe.id }}">
+                                                                        Ajouter Contrat
+                                                                    </button>
+                                                                {% else %}
+                                                                    <div class="row">
+                                                                        <div class="col-xs-12">
+                                                                            <div class="box box-primary">
+                                                                                <div class="box-header">
+                                                                                    <h3 class="box-title">Contrat de L'Employé</h3>
+                                                                                </div>
+                                                                                <!-- /.box-header -->
+                                                                                <div class="box-body table-responsive no-padding">
+                                                                                    <table class="table table-hover">
+                                                                                        <tr>
+                                                                                            <th>Contrat Actuel</th>
+                                                                                            <th>Date de Debut</th>
+                                                                                            <th>Date de Fin</th>
+                                                                                            <th>Actions</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><h4><span style="width: 100px" class="btn btn-success">{{ typecontrats.nomtypecontrat }}</span></h4></td>
+                                                                                            <td><h4><span style="width: 100px" class="btn btn-success">{{ typecontrats.datedebutcontrat | date("m/d/Y") }}</span></h4></td>
+                                                                                            {%  if(typecontrats.datefincontrat == null) %}
+                                                                                                <td><h4><span style="width: 200px" class="btn btn-info">Inconnue Pour le moment</span></h4></td>
+                                                                                            {% else %}
+                                                                                                <td><h4><span style="width: 100px" class="btn btn-success">{{ typecontrats.datefincontrat | date("m/d/Y") }}</span></h4></td>
+
+                                                                                            {% endif %}
+                                                                                            <td align="center">
+                                                                                                <button style="margin-top: 9px;" type="button"  class="btn btn-primary" data-toggle="modal" data-target="#myModalE{{ employe.id }}">
+                                                                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                                                                </button>
+                                                                                                <button title="Supprimer" type="button" style="margin-top: 9px;"  class="btn btn-danger" data-toggle="modal" data-target="#myModal988{{ typecontrats.idemp }}">
+                                                                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                                                                </button>
+                                                                                                <div class="modal fade" id="myModal988{{ typecontrats.idemp }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                                                    <div class="modal-dialog" role="document">
+                                                                                                        <div class="modal-content">
+                                                                                                            <div class="modal-header">
+                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                                <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                                                                                            </div>
+                                                                                                            <div class="modal-body">
+                                                                                                                <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ typecontrats.nomtypecontrat}}</p>
+                                                                                                            </div>
+                                                                                                            <div class="modal-footer">
+                                                                                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                                                                                                <a href="{{ path('delete_contrat_employe',{'id':typecontrats.idemp, 'idtemp':typecontrats.idtemp }) }}" class="btn btn-danger">
+                                                                                                                    Oui
+                                                                                                                </a>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <!-- /.box-body -->
+                                                                            </div>
+                                                                            <!-- /.box -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box box-warning">
+                                                                        <div class="box-header">
+                                                                            <h3 class="box-title">Historique des Contrats</h3>
+                                                                        </div>
+                                                                        <!-- /.box-header -->
+                                                                        <div class="box-body">
+                                                                            <table id="example5" class="table table-bordered table-striped">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>Contrat</th>
+                                                                                    <th>Date de Debut</th>
+                                                                                    <th>Date de Fin</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                {% for typecontrat2 in typecontrat1 %}
+                                                                                    <tr>
+                                                                                        <td><span>{{ typecontrat2.nomtypecontrat }}</span></td>
+                                                                                        <td><span>{{ typecontrat2.datedebutcontrat | date("m/d/Y") }}</span></td>
+                                                                                        {%  if(typecontrat2.datefincontrat == null) %}
+                                                                                            <td>Inconnue Pour le moment</td>
+                                                                                        {% else %}
+                                                                                            <td><span>{{ typecontrat2.datefincontrat | date("m/d/Y") }}</span></td>
+                                                                                        {% endif %}
+
+                                                                                    </tr>
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+
+                                                            <div class="tab-pane" id="tab_5">
+                                                                {% if(categorieemployes == null)%}
+                                                                    <h4> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalF{{ employe.id }}">
+                                                                            Ajouter Categorie
+                                                                        </button>
+                                                                    </h4>
+                                                                {% else %}
+                                                                    <div class="row">
+                                                                        <div class="box box-primary">
+                                                                            <div class="box-header">
+                                                                                <h3  class="box-title">Catégorie de l'Employé</h3>
+
+                                                                            </div>
+                                                                            <div class="box-body table-responsive no-padding">
+                                                                                <table class="table table-hover">
+                                                                                    <tr>
+                                                                                        <th>Catégorie Actuelle</th>
+                                                                                        <th align="center">Actions</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        {% for categorieemploye in categorieemployes %}
+                                                                                            <td><h4><span style="width: 100px;" class="btn btn-success">{{ categorieemploye.nomcategorieemploye }}</span></h4></td>
+                                                                                            <td align="center"> <button style="margin-top: 9px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalF{{ employe.id }}">
+                                                                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                                                                </button>
+                                                                                                <button title="Supprimer" type="button" style="margin-top: 9px;"  class="btn btn-danger" data-toggle="modal" data-target="#myModal1078{{ categorieemploye.idemp }}">
+                                                                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                                                                </button>
+                                                                                                <div class="modal fade" id="myModal1078{{ categorieemploye.idemp }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                                                    <div class="modal-dialog" role="document">
+                                                                                                        <div class="modal-content">
+                                                                                                            <div class="modal-header">
+                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                                <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                                                                                            </div>
+                                                                                                            <div class="modal-body">
+                                                                                                                <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ categorieemploye.nomcategorieemploye }}</p>
+                                                                                                            </div>
+                                                                                                            <div class="modal-footer">
+                                                                                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                                                                                                <a href="{{ path('delete_categorie_employe',{'id':categorieemploye.idemp}) }}" class="btn btn-danger">
+                                                                                                                    Oui
+                                                                                                                </a>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        {% endfor %}
+                                                                                    </tr>
+                                                                                </table>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                                <div class="modal fade" id="myModalF{{ employe.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                <h4 class="modal-title" id="myModalLabel">Ajout d'une Categorie</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p class="modal-title" id="myModalLabel">
+                                                                                    {{ form_start(form5) }}
+                                                                                <div class="form-group">
+                                                                                    <label>Catégorie</label>
+                                                                                    {{ form_widget(form5.nomcategorieemploye) }}
+                                                                                </div>
+
+                                                                                </p>
+                                                                                <br/>
+                                                                                <h4><p>
+                                                                                        Si le Contrat ne figure pas sur la liste déroulante veuillez l'ajouter<br/>
+                                                                                        en<a href="{{ path('parametrage_employe') }}">
+                                                                                            Cliquant ici
+                                                                                        </a>
+
+                                                                                    </p>
+                                                                                </h4>
+
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <div class="row">
+                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                                                    {{ form_widget(form5.save) }}
+                                                                                </div>
+                                                                                {{ form_end(form5) }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="tab-pane" id="tab_6">
+                                                                {% if(services == null)%}
+                                                                <h4> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalG{{ employe.id }}">
+                                                                        Ajouter Service
+                                                                    </button>
+                                                                </h4>
+                                                                {% else %}
+                                                                <div class="row">
+                                                                    <div class="box box-primary">
+                                                                        <div class="box-header">
+                                                                            <h3  class="box-title">Service de l'Employé</h3>
+
+                                                                        </div>
+                                                                        <div class="box-body table-responsive no-padding">
+                                                                            <table class="table table-hover">
+                                                                                <tr>
+                                                                                    <th>Service</th>
+                                                                                    <th align="center">Action</th>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    {% for service in services %}
+                                                                                        <td><h4><span>{{ service.nomservice }}</span></h4></td>
+                                                                                        <td align="center"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalG{{ employe.id }}">
+                                                                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                                                            </button>
+                                                                                            <button title="Supprimer" type="button" style="margin-top: 9px;"  class="btn btn-danger" data-toggle="modal" data-target="#myModal1176{{ service.idemp }}">
+                                                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                                                            </button>
+                                                                                            <div class="modal fade" id="myModal1176{{ service.idemp }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                                                <div class="modal-dialog" role="document">
+                                                                                                    <div class="modal-content">
+                                                                                                        <div class="modal-header">
+                                                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                            <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                                                                                        </div>
+                                                                                                        <div class="modal-body">
+                                                                                                            <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ service.nomservice }}</p>
+                                                                                                        </div>
+                                                                                                        <div class="modal-footer">
+                                                                                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                                                                                            <a href="{{ path('delete_service_employe',{'id':service.idemp })}}" class="btn btn-danger">
+                                                                                                                Oui
+                                                                                                            </a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    {% endfor %}
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                                    <div class="modal fade" id="myModalG{{ employe.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                    <h4 class="modal-title" id="myModalLabel">Ajout d'un Service</h4>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <p class="modal-title" id="myModalLabel">
+                                                                                        {{ form_start(form6) }}
+                                                                                    <div class="form-group">
+                                                                                        <label>Service</label>
+                                                                                        {{ form_widget(form6.nomservice) }}
+                                                                                    </div>
+
+                                                                                    </p>
+                                                                                    <br/>
+                                                                                    <h4><p>
+                                                                                            Si le Contrat ne figure pas sur la liste déroulante veuillez l'ajouter<br/>
+                                                                                            en<a href="{{ path('parametrage_employe') }}">
+                                                                                                Cliquant ici
+                                                                                            </a>
+
+                                                                                        </p>
+                                                                                    </h4>
+
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <div class="row">
+                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                                                        {{ form_widget(form6.save) }}
+                                                                                    </div>
+                                                                                    {{ form_end(form6) }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <!-- /.tab-pane -->
+                                                            </div>
+                                                            <!-- /.tab-content -->
+                                                        </div>
+                                                        <!-- nav-tabs-custom -->
+
+
+                                                    </div>
+
+
+<div class="accordion-item">
+<a class="accordion-title" data-toggle="collapse" data-parent="#accordioninpanel" href="#collapseinThree">
+    <h4>Informations Diverses</h4></a>
+<div id="collapseinThree" class="collapsein">
+    <div class="accordion-body">
+        <div class="col-md-12">
+          <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab_7" data-toggle="tab">Contact</a></li>
+              <li><a href="#tab_8" data-toggle="tab">CV</a></li>
+              <li><a href="#tab_9" data-toggle="tab">Antécédents Médicaux</a></li>
+              <li><a href="#tab_10" data-toggle="tab">Tab 4</a></li>
+              
+              </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_7">
+               <P class="list-group-item"><b>Mail</b> : {{ employe.mail }}</P>
+                <P class="list-group-item"><b>Telephone </b> : {{ employe.telephone }}</P>
+                <P class="list-group-item"><b>Adresse Professionelle </b> : {{ employe.lieuTravail }}</P>
+            
+            
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_8">
+                <a href="{{ asset('uploads/cv/' ~ employe.cv) }}">CV au format (PDF)</a>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_9">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic typesetting,
+                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <div class="tab-pane" id="tab_10">
+                tab4Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic typesetting,
+                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- nav-tabs-custom -->
+        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                           <!-- /.box -->
+    </section>
+{% endblock %}

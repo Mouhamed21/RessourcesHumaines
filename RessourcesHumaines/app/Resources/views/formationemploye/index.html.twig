@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'formationemploye/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Formations
+            <small>Formations & Employes</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
+            <li class="active">Formations & Employes</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+    <h1>FormationEmploye list</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Datedebutforationmemploye</th>
+                <th>Datefinformationemploye</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formationEmploye in formationEmployes %}
+            <tr>
+                <td><a href="{{ path('formationemploye_show', { 'id': formationEmploye.id }) }}">{{ formationEmploye.id }}</a></td>
+                <td>{{ formationEmploye.datedebutforationmemploye }}</td>
+                <td>{{ formationEmploye.datefinformationemploye }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('formationemploye_show', { 'id': formationEmploye.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('formationemploye_edit', { 'id': formationEmploye.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <ul>
+        <li>
+            <a href="{{ path('formationemploye_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+</content>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'evaluation/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Carrières et Compétences
+            <small>Evaluation du Personnel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Carrières et Compétences</a></li>
+            <li class="active">Evaluation du Personnel</li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+<section class="content">
+    <h3>Modification Evaluation</h3>
+    <div class="text-right" xmlns="http://www.w3.org/1999/html">
+        <a class="btn btn-primary" style="margin-bottom: 10px;" 
+        href="{{ path('evaluation_index') }}">Retourner à la liste des Evaluations</a>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            {{ form_start(edit_form) }}
+                {{ form_widget(edit_form) }}
+                <input type="submit" value="Enregitrer" class="btn btn-primary" style="margin-top:10px"/>
+            {{ form_end(edit_form) }}
+
+        </div>
+    </div>
+</section>
+{% endblock %}

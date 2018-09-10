@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'formation/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Formations
+            <small>Elaboration du plan de Formation</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
+            <li class="active">Elaboration du plan de Formation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+    <div class="text-center">
+        <h1>CREATION D'UNE FORMATION</h1>
+    </div>
+    <div align="right">
+            <a class="btn btn-primary" href="{{ path('formation_index') }}" style="margin-top:5px;">Retour</a>
+        </div>
+        {{ form_start(form) }}
+        <div class="form-group">
+        <label>Nom</label>
+            {{ form_widget(form.nomFormation) }}
+        </div>
+
+        <div class="form-group">
+        <label>Date de Début</label>
+            {{ form_widget(form.datedebutformation) }}
+        </div>
+        <div class="form-group">
+        <label>Date de Fin</label>
+            {{ form_widget(form.datefinformation) }}
+        </div>
+        <div class="form-group">
+        <label>Lieu</label>
+            {{ form_widget(form.lieuFomation) }}
+        </div>
+        <div class="form-group">
+        <label>Type de Formation</label>
+            {{ form_widget(form.typeformation) }}
+        </div>
+         <div class="form-group">
+        <label>Etat de Formation</label>
+            {{ form_widget(form.etatformation) }}
+        </div>
+            <input type="submit" value="Enregistrer" class="btn btn-primary" style="margin-top:10px;" />
+    
+        {{ form_end(form) }}
+</section>
+{% endblock %}

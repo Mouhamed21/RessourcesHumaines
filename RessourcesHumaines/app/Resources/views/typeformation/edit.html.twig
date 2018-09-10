@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'typeformation/inc/header.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Paramétrage
+            <small>Paramétrage Liés aux Formations</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-gear"></i>Paramétrage</a></li>
+            <li class="active">Paramétrer Formations</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+    <h1>TypeFormation edit</h1>
+    <div align="right">
+         <a class="btn btn-primary" href="{{ path('parametrage_typeformation_index') }}" style="margin-bottom:10px;">Retour</a>
+    </div>
+    {{ form_start(edit_form) }}
+     <div class="form-group">
+    <label>Type Formation</label>
+        {{ form_widget(edit_form.nomtypeformation) }}
+     </div>
+        <input type="submit" value="Enregistrer" class="btn btn-primary" style="margin-top:10px;" />
+   
+    {{ form_end(edit_form) }}
+</section>
+
+{% endblock %}

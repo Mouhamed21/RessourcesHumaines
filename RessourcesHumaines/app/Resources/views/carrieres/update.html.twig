@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'carrieres/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Carrières et Compétences
+            <small>Evaluation du Personnel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Carrières et Compétences</a></li>
+            <li>Evaluation du Personnel</li>
+            <li class="active">Modifier Evaluation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+    <section class="content">
+        <div class="row">
+            <div class="container-fluid">
+                <div class="text-right">
+                    <a href="{{ absolute_url(asset(''))  }}app_dev.php/carrieres" class="btn btn-primary">Retour</a>
+                </div>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

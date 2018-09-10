@@ -1,0 +1,93 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * NationnaliteEnfant
+ *
+ * @ORM\Table(name="nationnalite_enfant")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\NationnaliteEnfantRepository")
+ */
+class NationnaliteEnfant
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @ORM\ManyToOne(targetEntity="Nationalite")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $nationalite;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Enfant")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $enfant;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nationalite
+     *
+     * @param \AppBundle\Entity\Nationalite $nationalite
+     *
+     * @return NationnaliteEnfant
+     */
+    public function setNationalite(\AppBundle\Entity\Nationalite $nationalite)
+    {
+        $this->nationalite = $nationalite;
+
+        return $this;
+    }
+
+    /**
+     * Get nationalite
+     *
+     * @return \AppBundle\Entity\Nationalite
+     */
+    public function getNationalite()
+    {
+        return $this->nationalite;
+    }
+
+    /**
+     * Set enfant
+     *
+     * @param \AppBundle\Entity\Enfant $enfant
+     *
+     * @return NationnaliteEnfant
+     */
+    public function setEnfant(\AppBundle\Entity\Enfant $enfant)
+    {
+        $this->enfant = $enfant;
+
+        return $this;
+    }
+
+    /**
+     * Get enfant
+     *
+     * @return \AppBundle\Entity\Enfant
+     */
+    public function getEnfant()
+    {
+        return $this->enfant;
+    }
+}

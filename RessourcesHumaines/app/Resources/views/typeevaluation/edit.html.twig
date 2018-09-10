@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'typeevaluation/inc/header.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Paramétrage
+            <small>Paramétrage Liés aux Evaluations</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-gear"></i>Paramétrage</a></li>
+            <li class="active">Paramétrer Evaluation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+<div class="text-center">
+    <h1>Modification D'un Type D'évaluation</h1>
+</div>
+    <div class="text-right" xmlns="http://www.w3.org/1999/html">
+        <a class="btn btn-primary" style="margin-bottom: 10px;" 
+        href="{{ path('parametrage_evaluation_index') }}">Retour</a>
+    </div>
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" class="btn btn-primary" value="Enregistrer" style='margin-top:10px; margin-bottom:5px'/>
+    {{ form_end(edit_form) }}
+</section>
+{% endblock %}

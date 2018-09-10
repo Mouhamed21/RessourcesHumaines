@@ -1,0 +1,503 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'formation/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Formations
+            <small>Elaboration du plan de Formation</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
+            <li class="active">Elaboration du plan de Formation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+   <div  align="right" xmlns="http://www.w3.org/1999/html">
+        <a class="btn btn-primary" style="margin-bottom: 10px;" 
+        href="{{ path('formation_index') }}">Retourner à la liste des Formations</a>
+    </div>
+     <div class="col-xs-12" >
+            {% for success_message in app.session.flashbag.get('message4') %}
+                <div class="alert alert-success alert-dismissible" style="margin-top: 10px">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i>{{ success_message }}</h4>
+                </div>
+            {% endfor %}
+            {% for success_message in app.session.flashbag.get('message3') %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> {{ success_message }}</h4>
+                </div>
+            {% endfor %}
+        </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="box-title">Détails de la Formation {{ formation.nomFormation }}</h4>
+                </div>
+               
+                <!-- /.box-header -->
+                <div class="box-body">
+                        <p class="row">
+                            <p class="col-lg-12 col-xs-12">
+                            <p class="list-group">
+                            <P class="list-group-item"><b>Date de Début</b> : {% if formation.datedebutformation %}{{ formation.datedebutformation|date('Y-m-d') }}{% endif %}</P>
+                            <P class="list-group-item"><b>Date de fin</b> : {% if formation.datefinformation %}{{ formation.datefinformation|date('Y-m-d') }}{% endif %}</P> 
+                            <P class="list-group-item"><b>Lieufomation</b> :{{ formation.lieuFomation }}</P>  
+                            <P class="list-group-item"><b>Type Fomation</b> :{{ formations.nomtypeformation }}</P>
+                            <P class="list-group-item"><b>Etat Fomation</b> :{{ formations.nometatformation }}</P>
+
+                            <P class="list-group-item"><b>Actions</b> : <a title="Modifier" href="{{ path('formation_edit', { 'id': formation.id }) }}" class="btn btn-success btn-sm">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <button title="Supprimer" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal{{ formation.id }}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                            <P>
+                            
+        
+               <div class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-info"></i>Cliquer sur l'un des Boutons suivants pour les ouvrir et recliquer pour la femeture  </h4>
+                
+              </div>
+      
+                           
+  <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Programmes</a>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2"> <span class="glyphicon glyphicon-eye-open"></span> Actions</button>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3"><span class="glyphicon glyphicon-eye-open"></span> Matériaux</button>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4">   <span class="glyphicon glyphicon-eye-open"></span> Appels D'Offres</button>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample5" aria-expanded="false" aria-controls="multiCollapseExample5"> <span class="glyphicon glyphicon-eye-open"></span> Employés</button>
+  
+</p>
+<div class="row">
+  <div class="col">
+    <div class="collapse multi-collapse in" id="multiCollapseExample1">
+      <div class="card card-body">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">Liste des Programmes</h3>
+                        </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            
+                                            <th>Libelle</th>
+                                            <th>Date de Début</th>
+                                            <th>Date de Fin</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for programme in programmes %}
+                                        <tr>      
+                                            <td>{{ programme.libelle }}</td>
+                                            <td>{% if programme.datedebutprogramme %}{{ programme.datedebutprogramme|date('Y-m-d') }}{% endif %}</td>
+                                            <td>{% if programme.datefinprogramme %}{{ programme.datefinprogramme|date('Y-m-d') }}{% endif %}</td>
+                                            <td align="center">
+                                                <a title="Détails" href="{{ path('formation_show_show', { 'id': programme.id })}}" class="btn btn-facebook  btn-sm"><span class="glyphicon glyphicon-list"></span></a>
+                                                <a title="Modifier" href="{{ path('formation_show_edit', { 'id': programme.id }) }}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table> 
+                            </div>
+                            <p align="center"><button  title="Ajouter Un Programme" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModalA{{ formation.id }}">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button></p>
+               
+                </div>
+            </div>
+         </div>
+        </div>
+  </div>
+  <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample2">
+        <div class="card card-body">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Liste des Actions</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Coût</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for action in actions %}
+                            <tr>
+                                <td>{{ action.nomAction }}</td>
+                                <td>{{ action.coutAction }}</td>
+                                <td align="center">
+                                    
+                                    <a title="Détails" href="{{ path('action_show', { 'id': action.id }) }}" class="btn btn-facebook btn-sm"><span class="glyphicon glyphicon-list"></span></a>
+                                       
+                                    <a title="Modifier" href="{{ path('action_edit', { 'id': action.id }) }}"class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                                    
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <p align="center"><button  title="Ajouter Une Action" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModalE{{ formation.id }}">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button></p>
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+   <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample3">
+      <div class="card card-body">
+      <div class="col-xs-12">
+       <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Liste des Matériaux</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example3" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                           
+                                <th>Nom Materiel</th>
+                                <th>Quantite</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for materiel in materiels %}
+                            <tr>
+                                <td>{{ materiel.nomMateriel }}</td>
+                                <td>{{ materiel.quantite }}</td>
+                                <td align="center">
+                                    <a href="{{ path('materiel_show', { 'id': materiel.id }) }}" class="btn btn-facebook btn-sm"><span class="glyphicon glyphicon-list"></span></a>
+                                    <a href="{{ path('materiel_edit', { 'id': materiel.id }) }}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <p align="center"><button  title="Ajouter Un Matériel" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModalF{{ formation.id }}">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button></p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample4">
+      <div class="card card-body">
+      <div class="col-xs-12">
+       <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Liste des Appels D'Offres</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example4" class="table table-bordered table-striped">
+            
+                        <thead>
+                            <tr>
+                                
+                                <th>Intitule</th>
+                                <th>Budget</th>
+                                <th>Theme</th>
+                                <th>Début de l'Appel d'Offre</th>
+                                <th>Date de Fin de l'Appel d'Offre</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for offreFormation in offreFormations %}
+                            <tr>
+                                
+                                <td>{{ offreFormation.intitule }}</td>
+                                <td>{{ offreFormation.budget }}</td>
+                                <td>{{ offreFormation.theme }}</td>
+                                <td>{% if offreFormation.datedebutoffre %}{{ offreFormation.datedebutoffre|date('Y-m-d') }}{% endif %}</td>
+                                <td>{% if offreFormation.datefinoffre %}{{ offreFormation.datefinoffre|date('Y-m-d') }}{% endif %}</td>
+                                <td align="center">
+                                   
+                                    <a title="Détails" href="{{ path('offreformation_show', { 'id': offreFormation.id }) }}" class="btn btn-facebook btn-sm"><span class="glyphicon glyphicon-list"></span></a>
+                                
+                                    <a title="Modifier" href="{{ path('offreformation_edit', { 'id': offreFormation.id }) }}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                                   
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+      </div>
+      <p align="center"><button  title="Ajouter Un Appel d'Offre" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModalG{{ formation.id }}">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button></p>
+       
+</div>
+</div>
+      </div>
+    </div>
+  </div>
+   <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample5">
+      <div class="card card-body">
+      <div class="col-xs-12">
+          
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">Liste des Employés Séléctionner pour cette formation</h3>
+                        </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            
+                                            <th>Nom</th>
+                                            <th>Prenom</th>
+                                            <th>Matricule</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for programme in programmes %}
+                                        <tr>      
+                                            <td>{{ programme.libelle }}</td>
+                                            <td>{% if programme.datedebutprogramme %}{{ programme.datedebutprogramme|date('Y-m-d') }}{% endif %}</td>
+                                            <td>{% if programme.datefinprogramme %}{{ programme.datefinprogramme|date('Y-m-d') }}{% endif %}</td>
+                                            <td align="center">
+                                                <a title="Détails" href="{{ path('formation_show_show', { 'id': programme.id })}}" class="btn btn-facebook  btn-sm"><span class="glyphicon glyphicon-list"></span></a>
+                                                <a title="Modifier" href="{{ path('formation_show_edit', { 'id': programme.id }) }}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table> 
+                            </div>
+                            <p align="center"><button class="btn btn-primary" data-toggle="modal" data-target="#myModalI{{ formation.id }}">
+                                 <span class="glyphicon glyphicon-plus"></span>
+                            </button></p>
+               
+                </div>
+      </div>
+    </div>
+  </div>
+</div>
+                            </p>
+                             
+                    </p>
+                              </p>
+                            </P>  
+                            </p>   
+                            </p>
+                        
+                </div>
+                                    <!-- Modal -->
+                    <div class="modal fade" id="myModal{{ formation.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Confirmation de Suppression</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="modal-title" id="myModalLabel">Voulez-vous Supprimer {{ formation.nomFormation }} </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Non</button>
+                                    {{ form_start(delete_form) }}
+                                        <input type="submit" class="btn btn-danger" value="Oui">
+                                    {{ form_end(delete_form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+ 
+                  
+                    
+    
+                
+                    <div class="modal fade" id="myModalG{{ formation.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Ajout d'un Appel D'Offre de cette Formation</h4>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(offreformation_form) }}
+                                        <div class="form-group">
+                                            <label>Intitule</label>
+                                        {{ form_widget(offreformation_form.intitule) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Budget</label>
+                                        {{ form_widget(offreformation_form.budget) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Theme</label>
+                                        {{ form_widget(offreformation_form.theme) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Date de Début</label>
+                                        {{ form_widget(offreformation_form.datedebutoffre) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Date de Fin</label>
+                                        {{ form_widget(offreformation_form.datefinoffre) }}
+                                    </div>                          
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                                        <input type="submit" value="Enregistrer" class="btn btn-primary" />
+                                    {{ form_end(offreformation_form) }}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="myModalI{{ formation.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Ajout Un Employe à cette Formation</h4>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(form1) }}
+                                        <div class="form-group">
+                                            <label>Choisir un Employe</label>
+                                        {{ form_widget(form1.employe) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Date de Début</label>
+                                        {{ form_widget(form1.datedebutformationemploye) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Date de Fin</label>
+                                        {{ form_widget(form1.datefinformationemploye) }}
+                                    </div>                          
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                                        
+                                    {{ form_end(form1) }}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal fade" id="myModalA{{ formation.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Ajout d'un Programme de Formation</h4>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(programme_form) }}
+                                        <div class="form-group">
+                                            <label>Libelle</label>
+                                        {{ form_widget(programme_form.libelle) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Date de Début</label>
+                                        {{ form_widget(programme_form.datedebutprogramme) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Date de Fin</label>
+                                        {{ form_widget(programme_form.datefinprogramme) }}
+                                    </div>                          
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                                        <input type="submit" value="Enregistrer" class="btn btn-primary" />
+                                    {{ form_end(programme_form) }}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+               
+                 <div class="modal fade" id="myModalE{{ formation.id }}" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Ajout d'une Action</h4>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(action_form) }}
+                                        <div class="form-group">
+                                            <label>Nom Action</label>
+                                        {{ form_widget(action_form.nomAction) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Coût Action</label>
+                                        {{ form_widget(action_form.coutAction) }}
+                                    </div>
+                                       
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                                        <input type="submit" value="Enregistrer" class="btn btn-primary" />
+                                    {{ form_end(action_form) }}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="myModalF{{ formation.id }}" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Ajout d'un Matériel uttilisé dans cette formation</h4>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_start(materiel_form) }}
+                                        <div class="form-group">
+                                            <label>Nom materiel</label>
+                                        {{ form_widget(materiel_form.nomMateriel) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Quantité</label>
+                                        {{ form_widget(materiel_form.quantite) }}
+                                    </div>
+                                       
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                                        <input type="submit" value="Enregistrer" class="btn btn-primary" />
+                                    {{ form_end(materiel_form) }}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+        </div>
+     
+        
+              
+            
+</section>
+{% endblock %}

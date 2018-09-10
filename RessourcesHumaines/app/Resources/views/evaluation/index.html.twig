@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'evaluation/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Carrières et Compétences
+            <small>Evaluation du Personnel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Carrières et Compétences</a></li>
+            <li class="active">Evaluation du Personnel</li>
+        </ol>
+    </section>
+{% endblock %}
+
+{% block body %}
+<section class="content">
+   
+        <a href="{{ path('evaluation_new') }}" class="btn btn-primary" style="margin-bottom: 10px" 
+        ><b>AJOUTER UNE EVALUATION</b></a>
+   
+     <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">LISTE DES EVALUATIONS</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>               
+                                <th>Nom Evaluation</th>
+                                <th>Date de debut</th>
+                                <th>Date de fin</th>
+                                <th>Description</th>
+                                <th>Type D'évaluation</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for evaluation in evaluations %}
+                            <tr>
+                                <td>{{ evaluation.nomEvaluation }}</td>
+                                <td>{% if evaluation.datedebut %}{{ evaluation.datedebut|date('Y-m-d ') }}{% endif %}</td>
+                                <td>{% if evaluation.datefin %}{{ evaluation.datefin|date('Y-m-d') }}{% endif %}</td>
+                                <td>{{ evaluation.description }}</td>
+                                <td>{{ evaluation.nomTypeEvaluation }}</td>
+                                <td align="center">
+                                  <a title="Détails" href="{{ path('evaluation_show', { 'id': evaluation.id }) }}" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-list"></span>
+                                  </a>
+                                  <a title="Modifier"  href="{{ path('evaluation_edit', { 'id': evaluation.id }) }}" class="btn btn-success btn-sm">
+                                       <span class="glyphicon glyphicon-edit"></span></span>
+                                  </a>
+                                  <a title="Soumètre à"  href="{{ path('evaluation_evaluationemploye_index', { 'id': evaluation.id }) }}" class="btn btn-facebook btn-sm">
+                                       <span class="glyphicon glyphicon-new-window"></span>
+                                  </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

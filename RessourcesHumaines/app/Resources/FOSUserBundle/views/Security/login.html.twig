@@ -1,0 +1,72 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+
+    <div style="margin-left: 320px;margin-bottom: 200px; margin-top: 200px;">
+        <div class="col-md-6">
+            <div class="box box-primary">
+
+                <div class="login-box-body">
+                    <p class="login-box-msg">Connexion</p>
+                <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
+
+
+                    <div class="box-body">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                        <div class="form-group has-feedback">
+                            <div class="col-sm-12">
+                                <input type="text" placeholder="Login" class="form-control"
+                                       id="username" name="_username" value="{{ last_username }}" required="required" />
+                                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            </div>
+                        </div>
+
+
+                            <div class="form-group has-feedback">
+                                <div class="col-sm-12">
+                                    <input type="password" placeholder="Mot de passe" class="form-control"
+                                           id="password" name="_password" required="required" />
+                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                </div>
+                            </div>
+
+
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <div class="checkbox icheck">
+
+                                    <label style="margin-left: 25px;">
+                                        <input type="checkbox"  name="_remember_me" value="on" />
+                                        {{ 'security.login.remember_me'|trans }}
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-xs-4">
+
+
+
+                                <button name="_submit" type="submit" class="btn btn-primary btn-block" value="{{ 'security.login.submit'|trans }}">Connexion</button>
+                            </div>
+                           <div style="margin-left: 25px; margin-bottom: 5px">
+                               <a href="{{ path('fos_user_registration_register') }}" class="text-center">Inscription</a>
+                               <!-- /.col -->
+                           </div>
+
+                        </div>
+
+
+
+
+                    </div>
+
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock fos_user_content %}

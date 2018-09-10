@@ -1,0 +1,56 @@
+<html>
+    <body>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Paramétrage Employés</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <h4><a href="{{ path('parametrage_employe_natonalite') }}">Ajouter Nationnalité</a></h4>
+                                </div>
+                                <div class="col-xs-3">
+                                    <h4><a href="{{ path("parametrage_employe_metier") }}" >Ajouter Métier</a></h4>
+                                </div>
+                                <div class="col-xs-3">
+                                    <h4>
+                                        <a href="{{ path('parametrage_employe_fonction') }}">Ajouter Fonction</a>
+                                    </h4>
+                                </div>
+                                <div class="col-xs-3">
+                                    <h4><a href="{{ path('parametrage_employe_categorie') }}">Ajouter Catégorie</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <h4><a href="{{ path('parametrage_employe_service') }}">Ajouter Service</a></h4>
+                                </div>
+                                <div class="col-xs-3">
+                                    <h4><a href="{{ path('parametrage_employe_contrat') }}">Ajouter Contrat</a></h4>
+                                </div>
+                                <div class="col-xs-3">
+                                    <h4><a href="{{ path('parametrage_employe_statut') }}">Ajouter Statut</a></h4>
+                                </div>
+                                <div class="col-xs-3">
+                                    <h4><a href="{{ path('parametrage_employe_etat') }}">Ajouter Etat</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'offreformation/inc/sidebare.html.twig' %}
+{% endblock %}
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Formations
+            <small>Elaboration du plan de Formation</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
+            <li class="active">Elaboration du plan de Formation</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+
+    <div class="text-center">
+        <h1>Modification D'Une Offre de Formation</h1>
+    </div>
+    <div class="text-right">
+        <a title="Retour à la liste des Offres de Formation" href="{{ path('formation_show', { 'id': formation.idfor }) }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-arrow-left"></a>
+    </div>
+                         {{ form_start(edit_form) }}
+                                        <div class="form-group">
+                                            <label>Intitule</label>
+                                        {{ form_widget(edit_form.intitule) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Budget</label>
+                                        {{ form_widget(edit_form.budget) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Theme</label>
+                                        {{ form_widget(edit_form.theme) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Date de Début</label>
+                                        {{ form_widget(edit_form.datedebutoffre) }}
+                                    </div>
+                                    <div class="form-group">
+                                            <label>Date de Fin</label>
+                                        {{ form_widget(edit_form.datefinoffre) }}
+                                    </div>                         
+                               
+                                    <input type="submit" value="Enregistrer" class="btn btn-primary" style="margin-top:10px;"/>
+                                    {{ form_end(edit_form) }}
+   
+</section>
+{% endblock %}
