@@ -18,7 +18,9 @@
 <section class="content">
    
           <!-- DONUT CHART -->
-          <div class="box box-danger">
+	<div class="row">
+		<div class="col-md-6">
+          <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Donut Chart</h3>
 
@@ -29,13 +31,16 @@
               </div>
             </div>
             <div class="box-body">
+				
+				
              <script>
+			  
 window.onload = function () {
-
-var totalVisitors = 883000;
+	
+var totalVisitors = 5;
 var visitorsData = {
 	"New vs Returning Visitors": [{
-		click: visitorsChartDrilldownHandler,
+		//click: visitorsChartDrilldownHandler,
 		cursor: "pointer",
 		explodeOnClick: false,
 		innerRadius: "75%",
@@ -45,59 +50,29 @@ var visitorsData = {
 		showInLegend: true,
 		startAngle: 90,
 		type: "doughnut",
-		dataPoints: [
-			{ y: 519960, name: "New Visitors", color: "#E7823A" },
-			{ y: 363040, name: "Returning Visitors", color: "#546BC1" }
+		
+		dataPoints:
+			[
+			{% for formation in formations %}	
+			
+			{ y:  {{ formation.nbrfor }} , name:"{{ formation.nomtypeformation }}"  },
+		
+			{% endfor %}
+		 	
+
 		]
 	}],
-	"New Visitors": [{
-		color: "#E7823A",
-		name: "New Visitors",
-		type: "column",
-		dataPoints: [
-			{ x: new Date("1 Jan 2015"), y: 33000 },
-			{ x: new Date("1 Feb 2015"), y: 35960 },
-			{ x: new Date("1 Mar 2015"), y: 42160 },
-			{ x: new Date("1 Apr 2015"), y: 42240 },
-			{ x: new Date("1 May 2015"), y: 43200 },
-			{ x: new Date("1 Jun 2015"), y: 40600 },
-			{ x: new Date("1 Jul 2015"), y: 42560 },
-			{ x: new Date("1 Aug 2015"), y: 44280 },
-			{ x: new Date("1 Sep 2015"), y: 44800 },
-			{ x: new Date("1 Oct 2015"), y: 48720 },
-			{ x: new Date("1 Nov 2015"), y: 50840 },
-			{ x: new Date("1 Dec 2015"), y: 51600 }
-		]
-	}],
-	"Returning Visitors": [{
-		color: "#546BC1",
-		name: "Returning Visitors",
-		type: "column",
-		dataPoints: [
-			{ x: new Date("1 Jan 2015"), y: 22000 },
-			{ x: new Date("1 Feb 2015"), y: 26040 },
-			{ x: new Date("1 Mar 2015"), y: 25840 },
-			{ x: new Date("1 Apr 2015"), y: 23760 },
-			{ x: new Date("1 May 2015"), y: 28800 },
-			{ x: new Date("1 Jun 2015"), y: 29400 },
-			{ x: new Date("1 Jul 2015"), y: 33440 },
-			{ x: new Date("1 Aug 2015"), y: 37720 },
-			{ x: new Date("1 Sep 2015"), y: 35200 },
-			{ x: new Date("1 Oct 2015"), y: 35280 },
-			{ x: new Date("1 Nov 2015"), y: 31160 },
-			{ x: new Date("1 Dec 2015"), y: 34400 }
-		]
-	}]
+
 };
 
 var newVSReturningVisitorsOptions = {
 	animationEnabled: true,
 	theme: "light2",
 	title: {
-		text: "New VS Returning Visitors"
+		text: "Les Types de Formations"
 	},
 	subtitles: [{
-		text: "Click on Any Segment to Drilldown",
+		//text: "Cliquez sur n'importe quel segment à explorer",
 		backgroundColor: "#2eacd1",
 		fontSize: 16,
 		fontColor: "white",
@@ -153,6 +128,7 @@ $("#backButton").click(function() {
 
 }
 </script>
+
 <style>
   #backButton {
 	border-radius: 4px;
@@ -170,16 +146,74 @@ $("#backButton").click(function() {
     display: none;
   }
 </style>
-</head>
-<body>
+
 
 <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
 <button class="btn invisible" id="backButton">< Back</button>
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
             </div>
             <!-- /.box-body -->
           </div>
+		  	
+	</div>
+	
+
+		<div class="col-md-6">
+          	<div class="box box-primary">
+            	<div class="box-header with-border">
+					<h3 class="box-title">Pie Chart</h3>
+
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+            </div>
+				<div class="box-body">
+				<canvas id="myChart" width="400" height="250"></canvas>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'pie',
+
+    // The data for our dataset
+		
+    data: {
+			
+        labels: [
+			{% for etatformation in etatformations %}
+			"{{ etatformation.nometatformation }}",
+			{% endfor %}],
+		
+        datasets: [{
+            label: "My First dataset",
+         	backgroundColor: ["#3e95cd","#8e5ea2","#e85ea2"],
+            			
+            data: [{% for etatformation in etatformations %}	
+				{{ etatformation.nbretat }},
+				{% endfor %}
+				],
+			
+			
+			
+        }]
+		
+    },
+	
+    // Configuration options go here
+    options: {}
+});
+</script>
+
+			
+				</div>
+		</div>
+</div>
+
 </section>
 
 

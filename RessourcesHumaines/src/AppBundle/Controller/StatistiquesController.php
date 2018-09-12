@@ -15,6 +15,14 @@ class StatistiquesController extends Controller
     {
         // replace this example code with whatever you need
         $this->denyAccessUnlessGranted('ROLE_USER');
-        return $this->render('formation/statistiqueformation.html.twig', []);
+        
+        $em = $this->getDoctrine()->getManager();
+        $formations = $em->getRepository('AppBundle:Formation')->getFormationsStats();
+        $etatformations = $em->getRepository('AppBundle:Formation')->getFormationsStatsetat();
+        
+       //var_dump($etatformations);die;
+        return $this->render('formation/statistiqueformation.html.twig', ['formations' => $formations,
+        'etatformations' => $etatformations
+        ]);
     }
 }

@@ -43,6 +43,36 @@ class FormationRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+    public function getFormationsStats()
+    {
+        $qb=$this->createQueryBuilder('f')
+        ->select('count(f.id) as nbrfor','tf.nomtypeformation')
+        ->innerJoin('AppBundle:TypeFormation', 'tf', Join::WITH, 'tf.id = f.typeformation')
+        ->groupBy('tf.nomtypeformation')
+        
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    public function getFormationsStatsetat()
+    {
+        $qb=$this->createQueryBuilder('f')
+        ->select('count(f.id) as nbretat','ef.nometatformation')
+        ->innerJoin('AppBundle:EtatFormation', 'ef', Join::WITH, 'ef.id = f.etatformation')
+        ->groupBy('ef.nometatformation')
+        
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
     public function TrouverFormations(\AppBundle\Entity\Programme $programme)
     {
         $qb=$this->createQueryBuilder('f')

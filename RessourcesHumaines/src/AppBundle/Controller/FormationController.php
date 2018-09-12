@@ -214,6 +214,7 @@ class FormationController extends Controller
             'offreformation_form' => $offreformationform->createView(),
         ));
     }
+    
 
     /**
      * Displays a form to edit an existing Formation entity.
