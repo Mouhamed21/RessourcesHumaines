@@ -37,4 +37,21 @@ class MetierRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+    public function findEmployeByMetiers()
+    {
+        $qb=$this->createQueryBuilder('m')
+            ->select('count(e.id) as nbremp','m.nommetier')
+            ->innerJoin('AppBundle:MetierEmploye', 'me', Join::WITH, 'm.id = me.metier')
+            ->innerJoin('AppBundle:Employe', 'e', Join::WITH, 'me.employe = e.id')
+            ->where('me.tag != 1')
+            //->andWhere('e.id = :employeId')
+            //->setParameter('employeId', $employe->getId())
+            ->groupBy('m.nommetier')
+        ;
+        try {
+            return ($qb ->getQuery()->getResult());
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

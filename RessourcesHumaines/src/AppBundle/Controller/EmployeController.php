@@ -744,6 +744,7 @@ class EmployeController extends Controller
     public function deletePostAction($id)
     {
         // replace this example code with whatever you need
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getManager();
         $employe = $em->getRepository('AppBundle:Employe')->find($id);
         $employe->setTag(1);

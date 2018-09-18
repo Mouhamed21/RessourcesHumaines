@@ -29,8 +29,8 @@ class EmployeType extends AbstractType
             ->add('prenom',TextType::class, ['attr'=>['class' => 'form-control','placeholder'=>'Prenom']])
             ->add('sexe',ChoiceType::class,[
                 'choices' => [
-                    'M' => 'M',
-                    'F' => 'F',
+                    'Homme' => 'Homme',
+                    'Femme' => 'Femme',
                 ],
                 'required'    => true,
                 'placeholder' => 'Genre',

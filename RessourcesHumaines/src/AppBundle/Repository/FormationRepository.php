@@ -73,6 +73,52 @@ class FormationRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+    public function getFormationsStatslieu()
+    {
+        $qb=$this->createQueryBuilder('f')
+        ->select('count(f.id) as nbrlieu','f.lieuFomation')
+        ->groupBy('f.lieuFomation')
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    public function getFormationsStatsdate()
+    {
+        //$query= new \DateTime('now'); 
+        //$test=$query->format('Y');
+        //var_dump($test);die;
+        $qb=$this->createQueryBuilder('f')
+        ->select('count(f.id) as nbrmois','SUBSTRING(f.datedebutformation,1,4) as annee',
+        "Case
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=01  THEN 'Janvier'
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=02  THEN 'Fevrier'
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=03  THEN 'Mars'
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=04  THEN 'Avril'
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=05  THEN 'Mai' 
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=06  THEN 'Juin'
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=07  THEN 'Juillet' 
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=08  THEN 'Août'
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=09  THEN 'Septembre'
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=10  THEN 'Octobre'
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=11  THEN 'Novembre'
+         WHEN  SUBSTRING(f.datedebutformation,6,2)=12  THEN 'Decembre' 
+        ELSE 'autre' END as mois")
+        ->groupBy('annee','mois')
+        ->orderBy('SUBSTRING(f.datedebutformation,6,2)')
+        //->where('annee =: test ')
+        //->setParameter('test', $test)
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
     public function TrouverFormations(\AppBundle\Entity\Programme $programme)
     {
         $qb=$this->createQueryBuilder('f')

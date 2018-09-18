@@ -1,0 +1,272 @@
+{% extends 'base.html.twig' %}
+{% block menu %}
+    {% include 'employe/inc/sidebar1.html.twig' %}
+{% endblock %}
+ {% block content %}
+    <section class="content-header">
+        <h1>
+            Formations
+            <small>Elaboration du plan de Formation</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
+            <li class="active">Suivie Statistique</li>
+        </ol>
+    </section>
+{% endblock %}
+{% block body %}
+<section class="content">
+   
+          <!-- DONUT CHART -->
+	<div class="row">
+		
+	<div class="col-md-6">
+			<div class="box box-primary">
+            	<div class="box-header with-border">
+					<h3 class="box-title">Les Employés par Sexe</h3>
+
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+            </div>
+				<div class="box-body">
+					<canvas id="myChart" width="400" height="240"></canvas>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+					<script>
+					var ctx = document.getElementById('myChart').getContext('2d');
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type: 'pie',
+
+						// The data for our dataset
+						
+						data: {
+								
+							labels: [
+								{% for sexe in sexes %}
+								"{{ sexe.sexe }}",
+								
+								{% endfor %}],
+							
+							datasets: [{
+								label: "My First dataset",
+								backgroundColor: ["#3e95cd","#8e5ea2","#e85ea2"],
+											
+								data: [{% for sexe in sexes %}	
+									{{ sexe.nbre }},
+									{% endfor %}
+									],					
+							}]
+							
+						},
+						
+						// Configuration options go here
+						options: {
+							responsive: true,
+							animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+
+						}
+					});
+					</script>		
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="box box-primary">
+            	<div class="box-header with-border">
+					<h3 class="box-title">Nombres d'Employés par Métier</h3>
+
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+            </div>
+				<div class="box-body">
+					<canvas id="newChart" width="400" height="240"></canvas>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+					<script>
+					var ctx = document.getElementById('newChart').getContext('2d');
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type: 'doughnut',
+
+						// The data for our dataset
+						
+						data: {
+								
+							labels: [
+								{% for metier in metiers %}
+								"{{ metier.nommetier }}",
+								
+								{% endfor %}],
+							
+							datasets: [{
+								label: "My First dataset",
+								backgroundColor: ["#3e95cd","#40E0D0","#B0C4DE"],
+											
+								data: [{% for metier in metiers %}	
+									{{ metier.nbremp}},
+									{% endfor %}
+									],					
+							}]
+							
+						},
+						
+						// Configuration options go here
+						options: {
+							animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+
+						}
+					});
+					</script>		
+				</div>
+			</div>
+		</div>
+			<div class="col-md-6">
+			<div class="box box-primary">
+            	<div class="box-header with-border">
+					<h3 class="box-title">Nombres d'Employés par Catégorie</h3>
+
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+            </div>
+				<div class="box-body">
+					<canvas id="Chart3" width="400" height="240"></canvas>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+					<script>
+					var ctx = document.getElementById('Chart3').getContext('2d');
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type: 'doughnut',
+
+						// The data for our dataset
+						
+						data: {
+								
+							labels: [
+								{% for categorieemploye in categorieemployes %}
+								"Categorie {{ categorieemploye.nomcategorieemploye }}",
+								
+								{% endfor %}],
+							
+							datasets: [{
+								label: "Catégorie Employé",
+								backgroundColor: ["#9ACD32","#008080","#B0C4DE","#FF6347"],
+											
+								data: [{% for categorieemploye in categorieemployes %}	
+									{{ categorieemploye.nbrem}},
+									{% endfor %}
+									],					
+							}]
+							
+						},
+						
+						// Configuration options go here
+						options: {
+						       animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+
+    
+
+						}
+					});
+					</script>		
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="box box-success">
+            	<div class="box-header with-border">
+					<h3 class="box-title">Diagramme en Bar</h3>
+
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+            </div>
+				<div class="box-body">
+					<canvas id="Chart4" width="400" height="240"></canvas>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+					<script>
+					var ctx = document.getElementById('Chart4').getContext('2d');
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type: 'bar',
+
+						// The data for our dataset
+						
+						data: {
+								
+							labels: [
+								{% for service in services %}
+								"{{service.nomservice }}",
+								
+								{% endfor %}],
+							
+							datasets: [{
+								label: "Employe",
+								backgroundColor: ["#9ACD32","#008080","#B0C4DE","#FF6347"],
+											
+								data: [{% for service in services %}	
+									{{service.nbrser}},
+									{% endfor %}
+									],					
+							}]
+							
+						},
+						
+						// Configuration options go here
+						options: {
+							legend: {
+            display: false,
+            
+        },
+		 title: {
+            display: true,
+            text: "Nombre D'Employés par Service",
+			fontSize: 16
+        },
+						        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+		animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+
+					
+    
+
+						}
+					});
+					</script>		
+				</div>
+			</div>
+		</div>
+			</div>
+		
+
+
+</section>
+
+
+{% endblock %}

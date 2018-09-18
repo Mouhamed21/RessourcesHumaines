@@ -22,7 +22,7 @@
 		<div class="col-md-6">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Donut Chart</h3>
+              <h3 class="box-title">Types de Formations</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -31,139 +31,68 @@
               </div>
             </div>
             <div class="box-body">
-				
-				
-             <script>
-			  
-window.onload = function () {
-	
-var totalVisitors = 5;
-var visitorsData = {
-	"New vs Returning Visitors": [{
-		//click: visitorsChartDrilldownHandler,
-		cursor: "pointer",
-		explodeOnClick: false,
-		innerRadius: "75%",
-		legendMarkerType: "square",
-		name: "New vs Returning Visitors",
-		radius: "100%",
-		showInLegend: true,
-		startAngle: 90,
-		type: "doughnut",
-		
-		dataPoints:
-			[
-			{% for formation in formations %}	
-			
-			{ y:  {{ formation.nbrfor }} , name:"{{ formation.nomtypeformation }}"  },
-		
-			{% endfor %}
-		 	
+				<canvas id="Chart5" width="400" height="240"></canvas>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+					<script>
+					var ctx = document.getElementById('Chart5').getContext('2d');
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type: 'doughnut',
 
-		]
-	}],
-
-};
-
-var newVSReturningVisitorsOptions = {
-	animationEnabled: true,
-	theme: "light2",
-	title: {
-		text: "Les Types de Formations"
-	},
-	subtitles: [{
-		//text: "Cliquez sur n'importe quel segment à explorer",
-		backgroundColor: "#2eacd1",
-		fontSize: 16,
-		fontColor: "white",
-		padding: 5
-	}],
-	legend: {
-		fontFamily: "calibri",
-		fontSize: 14,
-		itemTextFormatter: function (e) {
-			return e.dataPoint.name + ": " + Math.round(e.dataPoint.y / totalVisitors * 100) + "%";  
-		}
-	},
-	data: []
-};
-
-var visitorsDrilldownedChartOptions = {
-	animationEnabled: true,
-	theme: "light2",
-	axisX: {
-		labelFontColor: "#717171",
-		lineColor: "#a2a2a2",
-		tickColor: "#a2a2a2"
-	},
-	axisY: {
-		gridThickness: 0,
-		includeZero: false,
-		labelFontColor: "#717171",
-		lineColor: "#a2a2a2",
-		tickColor: "#a2a2a2",
-		lineThickness: 1
-	},
-	data: []
-};
-
-var chart = new CanvasJS.Chart("chartContainer", newVSReturningVisitorsOptions);
-chart.options.data = visitorsData["New vs Returning Visitors"];
-chart.render();
-
-function visitorsChartDrilldownHandler(e) {
-	chart = new CanvasJS.Chart("chartContainer", visitorsDrilldownedChartOptions);
-	chart.options.data = visitorsData[e.dataPoint.name];
-	chart.options.title = { text: e.dataPoint.name }
-	chart.render();
-	$("#backButton").toggleClass("invisible");
-}
-
-$("#backButton").click(function() { 
-	$(this).toggleClass("invisible");
-	chart = new CanvasJS.Chart("chartContainer", newVSReturningVisitorsOptions);
-	chart.options.data = visitorsData["New vs Returning Visitors"];
-	chart.render();
-});
-
-}
-</script>
-
-<style>
-  #backButton {
-	border-radius: 4px;
-	padding: 8px;
-	border: none;
-	font-size: 16px;
-	background-color: #2eacd1;
-	color: white;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	cursor: pointer;
-  }
-  .invisible {
-    display: none;
-  }
-</style>
-
-
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
-<button class="btn invisible" id="backButton">< Back</button>
-<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
+						// The data for our dataset
+						
+						data: {
+								
+							
+								
+							datasets: [{
+								label: "My First dataset",
+								backgroundColor: ["#008080","#AFEEEE"],
+											
+								data: [{% for formation in formations %}	
+									{{ formation.nbrfor }},
+									{% endfor %}
+									],					
+							}],
+							labels: [
+								{% for formation in formations %}
+								
+								"{{ formation.nomtypeformation }}",
+								
+								{% endfor %}]
+							
+						},
+						
+						// Configuration options go here
+						options: {
+							legend: {
+            display: true,
+            position : 'bottom',
+        },
+		 title: {
+            display: true,
+            text: "Nombre De Formations par Type",
+			fontSize: 16
+        },
+						        
+		animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+							
+						}
+					});
+					</script>		
+				 
+             
             </div>
             <!-- /.box-body -->
-          </div>
-		  	
+          </div>	
 	</div>
-	
-
-		<div class="col-md-6">
-          	<div class="box box-primary">
+	<div class="col-md-6">
+			<div class="box box-danger">
             	<div class="box-header with-border">
-					<h3 class="box-title">Pie Chart</h3>
+					<h3 class="box-title">Etats de Formations</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -172,47 +101,206 @@ $("#backButton").click(function() {
 				</div>
             </div>
 				<div class="box-body">
-				<canvas id="myChart" width="400" height="250"></canvas>
-					<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-<script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'pie',
+					<canvas id="myChart" width="400" height="240"></canvas>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+					<script>
+					var ctx = document.getElementById('myChart').getContext('2d');
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type: 'pie',
 
-    // The data for our dataset
-		
-    data: {
-			
-        labels: [
-			{% for etatformation in etatformations %}
-			"{{ etatformation.nometatformation }}",
-			{% endfor %}],
-		
-        datasets: [{
-            label: "My First dataset",
-         	backgroundColor: ["#3e95cd","#8e5ea2","#e85ea2"],
-            			
-            data: [{% for etatformation in etatformations %}	
-				{{ etatformation.nbretat }},
-				{% endfor %}
-				],
-			
-			
-			
-        }]
-		
-    },
-	
-    // Configuration options go here
-    options: {}
-});
-</script>
-
-			
+						// The data for our dataset
+						
+						data: {
+								
+							labels: [
+								{% for etatformation in etatformations %}
+								"{{ etatformation.nometatformation }}",
+								
+								{% endfor %}],
+							
+							datasets: [{
+								label: "My First dataset",
+								backgroundColor: ["#C0C0C0","#FF6347","#708090"],
+											
+								data: [{% for etatformation in etatformations %}	
+									{{ etatformation.nbretat }},
+									{% endfor %}
+									],					
+							}]
+							
+						},
+						
+						// Configuration options go here
+						options: {
+							legend: {
+            				display: true,
+							position:'bottom'
+        },
+		 title: {
+            display: true,
+            text: "Nombre De Formations par Etat",
+			fontSize: 16
+        },
+						        
+		animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+							
+						}
+					});
+					</script>		
 				</div>
+			</div>
 		</div>
-</div>
+		
+		<div class="col-md-6">
+			<div class="box box-success">
+            	<div class="box-header with-border">
+					<h3 class="box-title">Formations par Lieu</h3>
+
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+            </div>
+				<div class="box-body">
+					<canvas id="Chart2" width="400" height="240"></canvas>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+					<script>
+					var ctx = document.getElementById('Chart2').getContext('2d');
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type: 'line',
+
+						// The data for our dataset
+						
+						data: {
+								
+							labels: [
+								{% for formationlieu in formationlieus %}
+								"{{ formationlieu.lieuFomation }}",
+								
+								{% endfor %}],
+							
+							datasets: [{
+								label: "Lieu de Formation",
+								backgroundColor: ["#9ACD32","#FF0000","#e85ea2"],
+								//backgroundColor: ["#FF0000","#FF0000","#e85ea2"],		
+								data: [{% for formationlieu in formationlieus %}	
+									{{ formationlieu.nbrlieu }},
+									{% endfor %}
+									],					
+							}]
+							
+						},
+						
+											// Configuration options go here
+											options: {
+												legend: {
+								display: false,
+								
+							},
+							title: {
+								display: true,
+								text: "Nombre De Formation par Lieu",
+								fontSize: 16
+							},
+													scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero:true
+									}
+								}]
+							},
+							animation: {
+									animateScale: true,
+									animateRotate: true
+								}
+											}
+										}
+										);
+										</script>		
+				</div>
+			</div>
+		</div>
+			<div class="col-md-6">
+			<div class="box box-info">
+            	<div class="box-header with-border">
+					<h3 class="box-title">Formations par Mois</h3>
+
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+            </div>
+				<div class="box-body">
+					<canvas id="Chart6" width="400" height="240"></canvas>
+					
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+					<script>
+					var ctx = document.getElementById('Chart6').getContext('2d');
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type: 'bar',
+
+						// The data for our dataset
+					
+						data: {
+								
+							labels: [
+								{% for formationdate in formationdates %}
+								
+								"{{ formationdate.mois }} {{ formationdate.annee }}",
+								
+								
+								{% endfor %}],
+							
+							datasets: [{
+								label: "Formation",
+								backgroundColor: ["#4169E1","#4682B4","#87CEEB"],
+								//backgroundColor: ["#FF0000","#FF0000","#e85ea2"],		
+								data: [{% for formationdate in formationdates %}	
+									{{ formationdate.nbrmois }},
+									{% endfor %}
+									],					
+							}]
+							
+						},
+						
+						// Configuration options go here
+									options: {
+										legend: {
+						display: false,
+						
+					},
+					title: {
+						display: true,
+						text: "Nombre De Formation par Mois",
+						fontSize: 16
+					},
+											scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero:true
+							}
+						}]
+					},
+					animation: {
+							animateScale: true,
+							animateRotate: true
+						}
+									}
+								}
+								);
+								</script>		
+				</div>
+			</div>
+		</div>
+
 
 </section>
 

@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 use Doctrine\ORM\Query\Expr\Join;
 
+
 /**
  * EmployeRepository
  *
@@ -32,6 +33,52 @@ class EmployeRepository extends \Doctrine\ORM\EntityRepository
             ->where('e.tag != 1')
             ;
         return $qb ->getQuery()->getResult();
+    }
+    public function findEmployeBySexe()
+    {
+        $qb=$this->createQueryBuilder('e')
+        ->select('count(e.id) as nbre','e.sexe','e.tag')
+        ->where('e.tag !=1')
+        //->innerJoin('AppBundle:EtatFormation', 'ef', Join::WITH, 'ef.id = f.etatformation')
+        ->groupBy('e.sexe')
+        
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    public function findEmployesByCategorie()
+    {
+        $qb=$this->createQueryBuilder('e')
+        ->select('count(e.id) as nbrem','ce.nomcategorieemploye')
+        ->innerJoin('AppBundle:CategorieEmploye', 'ce', Join::WITH, 'ce.id = e.categorieemploye')
+        ->groupBy('ce.nomcategorieemploye')
+        
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    public function findEmployesByService()
+    {
+        $qb=$this->createQueryBuilder('e')
+        ->select('count(e.id) as nbrser','s.nomservice')
+        ->innerJoin('AppBundle:Service', 's', Join::WITH, 's.id = e.service')
+        ->groupBy('s.nomservice')
+        
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
 
 }
