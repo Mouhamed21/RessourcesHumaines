@@ -56,5 +56,22 @@ class NationaliteRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+    public function findEmployeByNationalite()
+    {
+        $qb=$this->createQueryBuilder('n')
+            ->select('count(e.id) as nbrnat','n.nomNationalite')
+            ->innerJoin('AppBundle:NationnaliteEmploye', 'ne', Join::WITH, 'n.id = ne.nationalite')
+            ->innerJoin('AppBundle:Employe', 'e', Join::WITH, 'ne.employe = e.id')
+            ->where('ne.tag != 1')
+            //->andWhere('e.id = :employeId')
+            //->setParameter('employeId', $employe->getId())
+            ->groupBy('n.nomNationalite')
+        ;
+        try {
+            return ($qb ->getQuery()->getResult());
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 
 }

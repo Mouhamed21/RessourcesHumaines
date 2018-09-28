@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block menu %}
-    {% include 'employe/inc/sidebar1.html.twig' %}
+    {% include 'employe/inc/sidebar2.html.twig' %}
 {% endblock %}
  {% block content %}
     <section class="content-header">
@@ -10,7 +10,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-edit"></i>Formations</a></li>
-            <li class="active">Suivie Statistique</li>
+            <li class="active">Suivi Statistique</li>
         </ol>
     </section>
 {% endblock %}
@@ -23,7 +23,7 @@
 	<div class="col-md-6">
 			<div class="box box-primary">
             	<div class="box-header with-border">
-					<h3 class="box-title">Les Employés par Sexe</h3>
+					<h3 class="box-title">Les Employés par Situation Matrimoniale</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -38,27 +38,26 @@
 					var ctx = document.getElementById('myChart').getContext('2d');
 					var chart = new Chart(ctx, {
 						// The type of chart we want to create
-						type: 'pie',
+						type: 'bar',
 
 						// The data for our dataset
 						
 						data: {
 								
 							labels: [
-								{% for sexe in sexes %}
-								"{{ sexe.sexe }}",
+								{% for marie in maries %}
+								"{{ marie.situationMatri }}",
 								
 								{% endfor %}],
 							
 							datasets: [{
-								label: "My First dataset",
+								label: "Employé",
 								backgroundColor: ["#3e95cd","#8e5ea2","#e85ea2"],
 											
-								data: [{% for sexe in sexes %}	
-									{{ sexe.nbre }},
+								data: [{% for marie in maries %}	
+									{{ marie.nbrmarie }},
 									{% endfor %}
-									],
-														
+									],					
 							}]
 							
 						},
@@ -69,7 +68,19 @@
 							animation: {
                 animateScale: true,
                 animateRotate: true
-            }
+            },
+			legend: {
+            display: false,
+            
+        },
+			
+						        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
 
 						}
 					});
@@ -80,7 +91,7 @@
 		<div class="col-md-6">
 			<div class="box box-primary">
             	<div class="box-header with-border">
-					<h3 class="box-title">Nombres d'Employés par Métier</h3>
+					<h3 class="box-title">Nombres d'Employés par Fonction</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -102,36 +113,41 @@
 						data: {
 								
 							labels: [
-								{% for metier in metiers %}
-								"{{ metier.nommetier }}",
+								{% for fonction in fonctions %}
+								"{{ fonction.nomfonction }}",
 								
 								{% endfor %}],
 							
 							datasets: [{
-								label: "Métier",
-								//backgroundColor: ["#3e95cd","#40E0D0","#B0C4DE"],
+								label: "Employe",
+								//showLine: false,
+								//backgroundColor: ["#fff"],
+								
+								//borderWidth : 30,
 											
-								data: [{% for metier in metiers %}	
-									{{ metier.nbremp}},
+								data: [{% for fonction in fonctions %}	
+									{{ fonction.nbrfonc}},
 									{% endfor %}
-									],	
+									],		
 									"fill": false,
 									"borderColor": "rgb(0,153,225)",
-									"lineTension":  0.1,				
+									"lineTension":  0.1,			
 							}]
 							
 						},
 						
 						// Configuration options go here
 						options: {
-							scales: {
+
+
+								// showLines: false, 	
+								scales: {
 									yAxes: [{
 										ticks: {
 											beginAtZero:true
 										}
 									}]
 								},
-
 						}
 					});
 					</script>		
@@ -163,17 +179,17 @@
 						data: {
 								
 							labels: [
-								{% for categorieemploye in categorieemployes %}
-								"Categorie {{ categorieemploye.nomcategorieemploye }}",
+								{% for etat in etats %}
+								"{{ etat.nometat }}",
 								
 								{% endfor %}],
 							
 							datasets: [{
 								label: "Catégorie Employé",
-								backgroundColor: ["#9ACD32","#008080","#B0C4DE","#FF6347"],
+								backgroundColor: ["#008080","#FF6347","#9ACD32",,"#B0C4DE",],
 											
-								data: [{% for categorieemploye in categorieemployes %}	
-									{{ categorieemploye.nbrem}},
+								data: [{% for etat in etats %}	
+									{{ etat.nbretat}},
 									{% endfor %}
 									],					
 							}]
@@ -198,7 +214,7 @@
 		<div class="col-md-6">
 			<div class="box box-success">
             	<div class="box-header with-border">
-					<h3 class="box-title">Diagramme en Bar</h3>
+					<h3 class="box-title">Nombre d'Employé par nationalite</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -213,24 +229,24 @@
 					var ctx = document.getElementById('Chart4').getContext('2d');
 					var chart = new Chart(ctx, {
 						// The type of chart we want to create
-						type: 'bar',
+						type: 'pie',
 
 						// The data for our dataset
 						
 						data: {
 								
 							labels: [
-								{% for service in services %}
-								"{{service.nomservice }}",
+								{% for nationalite in nationalites %}
+								"{{	nationalite.nomNationalite }}",
 								
 								{% endfor %}],
 							
 							datasets: [{
 								label: "Employe",
-								backgroundColor: ["#9ACD32","#008080","#B0C4DE","#FF6347"],
+								backgroundColor: ["#B0C4DE","#9ACD32","#008080","#B0C4DE","#FF6347"],
 											
-								data: [{% for service in services %}	
-									{{service.nbrser}},
+								data: [{% for nationalite in nationalites %}	
+									{{nationalite.nbrnat}},
 									{% endfor %}
 									],					
 							}]
@@ -240,21 +256,15 @@
 						// Configuration options go here
 						options: {
 							legend: {
-            display: false,
+            display: true,
             
         },
 		 title: {
-            display: true,
+            display: false,
             text: "Nombre D'Employés par Service",
 			fontSize: 16
         },
-						        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        },
+						        
 		animation: {
                 animateScale: true,
                 animateRotate: true

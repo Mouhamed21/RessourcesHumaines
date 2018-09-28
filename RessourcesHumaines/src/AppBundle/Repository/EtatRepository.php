@@ -73,4 +73,21 @@ class EtatRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+    public function findEmployeByEtat()
+    {
+        $qb=$this->createQueryBuilder('et')
+            ->select('count(e.id) as nbretat','et.nometat')
+            ->innerJoin('AppBundle:EtatEmploye', 'ee', Join::WITH, 'et.id = ee.etat')
+            ->innerJoin('AppBundle:Employe', 'e', Join::WITH, 'ee.employe = e.id')
+            ->where('ee.tag != 1')
+            //->andWhere('e.id = :employeId')
+            //->setParameter('employeId', $employe->getId())
+            ->groupBy('et.nometat')
+        ;
+        try {
+            return ($qb ->getQuery()->getResult());
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

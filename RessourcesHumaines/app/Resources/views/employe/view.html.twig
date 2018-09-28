@@ -76,7 +76,7 @@
                                                         <button class="btn btn-primary " type="button" data-toggle="collapse" data-target="#multiCollapseExample3"
                                                                 aria-expanded="true" aria-controls="multiCollapseExample2">Nationalité</button>
                                                         <a class="btn btn-primary"  data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="true" aria-controls="multiCollapseExample1"><span class="glyphicon glyphicon-eye-open"></span>
-                                                            {% if(employe.sexe == 'M') %}
+                                                            {% if(employe.sexe == 'Homme') %}
                                                                 {% if(conjoints >1) %}
                                                                         Conjointes
                                                                 {% else %}
@@ -213,7 +213,7 @@
                                                                                         </tbody>
                                                                                     </table>
                                                                                 </div>
-                                                                                {% if(employe.sexe == 'M') %}
+                                                                                {% if(employe.sexe == 'Homme') %}
                                                                                     {% if(conjoints <4) %}
                                                                                         <center><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalH{{ employe.id }}">
                                                                                             <span class="glyphicon glyphicon-plus"></span>
@@ -222,7 +222,7 @@
                                                                                     {% else %}
                                                                                         <h4>Vous avez atteint le nombre maximun de Coinjointes</h4>
                                                                                     {% endif %}
-                                                                                {% elseif(employe.sexe == 'F') %}
+                                                                                {% elseif(employe.sexe == 'Femme') %}
                                                                                     {% if(conjoints==0) %}
                                                                                         <center><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalH{{ employe.id }}">
                                                                                             <span class="glyphicon glyphicon-plus"></span>
@@ -1261,9 +1261,7 @@
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_7" data-toggle="tab">Contact</a></li>
-              <li><a href="#tab_8" data-toggle="tab">CV</a></li>
-              <li><a href="#tab_9" data-toggle="tab">Antécédents Médicaux</a></li>
-              <li><a href="#tab_10" data-toggle="tab">Tab 4</a></li>
+             
               
               </ul>
             <div class="tab-content">
@@ -1275,28 +1273,7 @@
             
               </div>
               <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_8">
-                <a href="{{ asset('uploads/cv/' ~ employe.cv) }}">CV au format (PDF)</a>
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_9">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
-              </div>
-              <div class="tab-pane" id="tab_10">
-                tab4Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
-              </div>
+              
               <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->

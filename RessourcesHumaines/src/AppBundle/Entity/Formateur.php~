@@ -286,4 +286,28 @@ class Formateur
     {
         return $this->themeseminaire;
     }
+
+    /**
+     * Set tarifsemaine
+     *
+     * @param float $tarifsemaine
+     *
+     * @return Formateur
+     */
+    public function setTarifsemaine($tarifsemaine)
+    {
+        $this->tarifsemaine = $tarifsemaine;
+
+        return $this;
+    }
+
+    /**
+     * Get tarifsemaine
+     *
+     * @return float
+     */
+    public function getTarifsemaine()
+    {
+        return $this->tarifsemaine;
+    }
 }

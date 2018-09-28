@@ -60,4 +60,21 @@ class FonctionRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+    public function findEmployeByFonction()
+    {
+        $qb=$this->createQueryBuilder('f')
+            ->select('count(e.id) as nbrfonc','f.nomfonction')
+            ->innerJoin('AppBundle:FonctionEmploye', 'fe', Join::WITH, 'f.id = fe.fonction')
+            ->innerJoin('AppBundle:Employe', 'e', Join::WITH, 'fe.employe = e.id')
+            ->where('fe.tag != 1')
+            //->andWhere('e.id = :employeId')
+            //->setParameter('employeId', $employe->getId())
+            ->groupBy('f.nomfonction')
+        ;
+        try {
+            return ($qb ->getQuery()->getResult());
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

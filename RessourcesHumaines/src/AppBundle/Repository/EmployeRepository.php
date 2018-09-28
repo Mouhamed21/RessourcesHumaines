@@ -50,6 +50,22 @@ class EmployeRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+    public function findEmployeBySituationMatrimoniale()
+    {
+        $qb=$this->createQueryBuilder('e')
+        ->select('count(e.id) as nbrmarie','e.situationMatri','e.tag')
+        ->where('e.tag !=1')
+        //->innerJoin('AppBundle:EtatFormation', 'ef', Join::WITH, 'ef.id = f.etatformation')
+        ->groupBy('e.situationMatri')
+        
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
     public function findEmployesByCategorie()
     {
         $qb=$this->createQueryBuilder('e')
@@ -80,5 +96,24 @@ class EmployeRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+    public function getEmployees(\AppBundle\Entity\Formation $formation)
+    {
+        $qb=$this->createQueryBuilder('e')
+        ->select('e.id','e.nom','e.prenom','e.matricule','e.tag','f.id as idfo')
+            ->innerJoin('AppBundle:FormationEmploye', 'fe', Join::WITH, 'e.id = fe.employe')
+            ->innerJoin('AppBundle:Formation', 'f', Join::WITH, 'fe.formation = f.id')
+            //->where('fe.tag != 1')
+            ->andWhere('f.id = :formationId')
+            ->setParameter('formationId', $formation->getId())
+        ;
+
+        try {
+            return ($qb ->getQuery()->getResult());
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+      
+    }
+   
 
 }

@@ -74,7 +74,7 @@ class EmployeType extends AbstractType
             ])
             ->add('lieuTravail',TextType::class, ['attr'=>['class' => 'form-control','placeholder'=>'Lieu de Travail']])
             ->add('lieuNaissance',TextType::class, ['attr'=>['class' => 'form-control','placeholder'=>'Lieu de Naissance']])
-            ->add('cv', FileType::class,array('data_class' => null))
+            //->add('cv', FileType::class,array('data_class' => null))
             ->add('tag',HiddenType::class)
             ->add('save',SubmitType::class, array('label'=> 'Enregistrer', 'attr' => array('class' =>'btn btn-primary'
             )))

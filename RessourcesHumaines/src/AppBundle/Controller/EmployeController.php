@@ -106,10 +106,10 @@ class EmployeController extends Controller
         )
         {
            
-            $file = $employe->getCv();
-            $fileName = $this->get('app.cv_uploader')->upload($file);
+           // $file = $employe->getCv();
+            //$fileName = $this->get('app.cv_uploader')->upload($file);
                 
-            $employe->setCv($fileName);
+            //$employe->setCv($fileName);
     
 
             // ... persist the $employe variable or any other work
@@ -478,9 +478,9 @@ class EmployeController extends Controller
     {
         // replace this example code with whatever you need
         $employe = $this->getDoctrine()->getRepository('AppBundle:Employe')->find($id);
-        $employe->setCv(
+        /*$employe->setCv(
             new File($this->getParameter('cvs_directory').'/'.$employe->getCv())
-        );
+        );*/
         $form = $this->createForm(EmployeType::class, $employe);
         //var_dump($employe);die;
 

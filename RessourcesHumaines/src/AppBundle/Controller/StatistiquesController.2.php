@@ -51,25 +51,4 @@ class StatistiquesController extends Controller
         'categorieemployes' => $categorieemployes,'services'=>$services
         ]);
     }
-    /**
-     * @Route("/statistiquesemploye2", name="statistique_employee")
-     */
-    public function statempl2Action(Request $request)
-    {
-        // replace this example code with whatever you need
-       //$this->denyAccessUnlessGranted('ROLE_USER');
-        
-        $em = $this->getDoctrine()->getManager();
-        $maries = $em->getRepository('AppBundle:Employe')->findEmployeBySituationMatrimoniale();
-        
-        $fonctions = $em->getRepository('AppBundle:Fonction')->findEmployeByFonction();
-        $etats = $em->getRepository('AppBundle:Etat')->findEmployeByEtat();
-        $nationalites = $em->getRepository('AppBundle:Nationalite')->findEmployeByNationalite();
-        //var_dump($nationalites);die;
-        
-        
-        return $this->render('employe/statistiqueemploye.html2.twig', ['maries' => $maries,'fonctions' => $fonctions,
-        'etats' => $etats,'nationalites'=>$nationalites
-        ]);
-    }
 }

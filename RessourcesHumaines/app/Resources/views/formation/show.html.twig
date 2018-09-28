@@ -280,14 +280,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {% for programme in programmes %}
+                                    {% for employe in employes %}
                                         <tr>      
-                                            <td>{{ programme.libelle }}</td>
-                                            <td>{% if programme.datedebutprogramme %}{{ programme.datedebutprogramme|date('Y-m-d') }}{% endif %}</td>
-                                            <td>{% if programme.datefinprogramme %}{{ programme.datefinprogramme|date('Y-m-d') }}{% endif %}</td>
+                                            <td>{{ employe.nom }}</td>
+                                            <td>{{ employe.prenom }}</td>
+                                            <td>{{ employe.matricule }}</td>
                                             <td align="center">
-                                                <a title="Détails" href="{{ path('formation_show_show', { 'id': programme.id })}}" class="btn btn-facebook  btn-sm"><span class="glyphicon glyphicon-list"></span></a>
-                                                <a title="Modifier" href="{{ path('formation_show_edit', { 'id': programme.id }) }}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+                                                
                                             </td>
                                         </tr>
                                     {% endfor %}

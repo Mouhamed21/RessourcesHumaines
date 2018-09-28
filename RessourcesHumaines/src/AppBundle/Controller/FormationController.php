@@ -86,6 +86,8 @@ class FormationController extends Controller
         $actions = $em->getRepository('AppBundle:Action')->getActions($formation);
         $materiels = $em->getRepository('AppBundle:Materiel')->getMateriels($formation);
         $offreFormations = $em->getRepository('AppBundle:OffreFormation')->getOffreFormations($formation);
+        $employes = $em->getRepository('AppBundle:Employe')->getEmployees($formation);
+        
         $programme = new Programme();
         $programmeform = $this->createForm(ProgrammeType::class, $programme);
         $programmeform->handleRequest($request);
@@ -145,12 +147,10 @@ class FormationController extends Controller
                 'class' => Employe::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('e')
-                        ->orderBy('e.nom', 'ASC')
+                        ->orderBy('e.prenom', 'ASC')
                         ->where('e.tag != 1')
                         ;
                 },
-              
-    
                
                 //'choice_label' => 'prenom',
                     'choice_label' => function ($employe) {
@@ -190,8 +190,12 @@ class FormationController extends Controller
             $form1->handleRequest($request);
             if ($form1->isSubmitted() && $form1->isValid()) {
 
-                $prenom = $form1['prenom']->getData();   
-                $formationemploye->setEmploye($prenom); 
+                $employe= $form1['employe']->getData();   
+                $datedebutformationemploye = $form1['datedebutformationemploye']->getData(); 
+                $datedebutformationemploye = $form1['datefinformationemploye']->getData(); 
+                $formationemploye->setDatedebutformationemploye($datedebutformationemploye);
+                $formationemploye->setDatefinformationemploye($datedebutformationemploye);
+                $formationemploye->setEmploye($employe); 
                 $formationemploye->setFormation($formation);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($formationemploye);
@@ -202,6 +206,7 @@ class FormationController extends Controller
         return $this->render('formation/show.html.twig', array(
             'formation' => $formation,
             'formations' => $formations,
+            'employes' => $employes,
             'programmes' => $programmes,
             'actions' => $actions,
             'materiels' => $materiels,

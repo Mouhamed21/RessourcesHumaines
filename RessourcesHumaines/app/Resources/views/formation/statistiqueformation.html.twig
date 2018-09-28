@@ -187,38 +187,29 @@
 							
 							datasets: [{
 								label: "Lieu de Formation",
-								backgroundColor: ["#9ACD32","#FF0000","#e85ea2"],
+								//backgroundColor: ["#9ACD32","#FF0000","#e85ea2"],
 								//backgroundColor: ["#FF0000","#FF0000","#e85ea2"],		
 								data: [{% for formationlieu in formationlieus %}	
 									{{ formationlieu.nbrlieu }},
 									{% endfor %}
-									],					
+									],	
+									"fill": false,
+									"borderColor": "rgb(0,153,225)",
+									"lineTension":  0.1,				
 							}]
 							
 						},
 						
 											// Configuration options go here
 											options: {
-												legend: {
-								display: false,
-								
-							},
-							title: {
-								display: true,
-								text: "Nombre De Formation par Lieu",
-								fontSize: 16
-							},
-													scales: {
-								yAxes: [{
-									ticks: {
-										beginAtZero:true
-									}
-								}]
-							},
-							animation: {
-									animateScale: true,
-									animateRotate: true
-								}
+												scales: {
+									yAxes: [{
+										ticks: {
+											beginAtZero:true
+										}
+									}]
+								},
+							
 											}
 										}
 										);

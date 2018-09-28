@@ -29,7 +29,7 @@ class EtatType extends AbstractType
                         ->where('et.tag != 1')
                         ;
                 },
-                'placeholder' => 'Etat',
+                //'placeholder' => 'Etat',
                 'choice_label' => 'nometat',
                 'choice_value' => function (Etat $entity = null) {
                     return $entity ? $entity->getId() : '';

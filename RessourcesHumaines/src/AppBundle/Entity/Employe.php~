@@ -111,13 +111,7 @@ class Employe
      * @ORM\Column(name="tag", type="boolean")
      */
     private $tag;
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
-     * @Assert\File(mimeTypes={ "application/pdf" })
-     */
-    private $cv;
+    
 
     /**
      * Get id
@@ -475,23 +469,5 @@ class Employe
         return $this;
     }
 
-    /**
-     * Get the value of cv
-     */ 
-    public function getCv()
-    {
-        return $this->cv;
-    }
-
-    /**
-     * Set the value of cv
-     *
-     * @return  self
-     */ 
-    public function setCv($cv)
-    {
-        $this->cv = $cv;
-
-        return $this;
-    }
+    
 }
