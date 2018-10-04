@@ -22,8 +22,8 @@
                 <td>{{ offreFormation.intitule }}</td>
                 <td>{{ offreFormation.budget }}</td>
                 <td>{{ offreFormation.theme }}</td>
-                <td>{% if offreFormation.datedebutoffre %}{{ offreFormation.datedebutoffre|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if offreFormation.datefinoffre %}{{ offreFormation.datefinoffre|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if offreFormation.datedebutoffre %}{{ offreFormation.datedebutoffre|date('d-m-Y') }}{% endif %}</td>
+                <td>{% if offreFormation.datefinoffre %}{{ offreFormation.datefinoffre|date('d-m-Y') }}{% endif %}</td>
                 <td>
                     <ul>
                         <li>

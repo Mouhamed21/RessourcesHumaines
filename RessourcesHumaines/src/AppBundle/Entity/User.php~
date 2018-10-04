@@ -31,7 +31,10 @@ class User extends BaseUser
      * )
      */
     protected $matricule;
-
+    /**
+     * @var array
+     */
+    protected $roles;
 
     public function __construct()
     {

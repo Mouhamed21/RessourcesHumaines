@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 use Doctrine\ORM\Query\Expr\Join;
+use Symfony\Component\Validator\Constraints\DateTime;
 /**
  * FormationRepository
  *
@@ -26,6 +27,7 @@ class FormationRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+    
     public function getFormations(\AppBundle\Entity\Formation $formation)
     {
         $qb=$this->createQueryBuilder('f')
@@ -106,7 +108,7 @@ class FormationRepository extends \Doctrine\ORM\EntityRepository
          WHEN  SUBSTRING(f.datedebutformation,6,2)=10  THEN 'Octobre'
          WHEN  SUBSTRING(f.datedebutformation,6,2)=11  THEN 'Novembre'
          WHEN  SUBSTRING(f.datedebutformation,6,2)=12  THEN 'Decembre' 
-        ELSE 'autre' END as mois")
+         ELSE 'autre' END as mois")
         ->groupBy('annee','mois')
         ->orderBy('SUBSTRING(f.datedebutformation,6,2)')
         //->where('annee =: test ')

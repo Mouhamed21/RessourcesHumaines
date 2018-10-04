@@ -32,7 +32,7 @@ class ConjointType extends AbstractType
                     'data-date-format' => 'dd-mm-yyyy'
                 ]
             ])
-            ->add('SituationMatrimoniale',ChoiceType::Class, [
+            /*->add('SituationMatrimoniale',ChoiceType::Class, [
                 'choices' => [
                     'Célibataire' => 'Célibataire',
                     'Marié' => 'Marié',
@@ -43,7 +43,7 @@ class ConjointType extends AbstractType
                     'class' => 'form-control',
                 ]
             ])
-            ->add('raisonInactif',TextType::Class, ['attr'=>['class' => 'form-control','placeholder'=>'Raison Inactif']])
+            ->add('raisonInactif',TextType::Class, ['attr'=>['class' => 'form-control','placeholder'=>'Raison Inactif']])*/
             ->add('situationProfessionnelle',TextType::Class, ['attr'=>['class' => 'form-control','placeholder'=>'Situation Professionnelle']])
             ->add('save',SubmitType::Class, array('label'=> 'Enregistrer', 'attr' => array('class' =>'btn btn-primary',
                 'style'=>'margin-right:10px;')))

@@ -4,15 +4,7 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="{{ asset('bundles/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>{{ app.user.username }}</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                </div>
-            </div>
+            
             <!-- search form -->
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
@@ -26,8 +18,9 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">MAIN NAVIGATION</li>
+                <li class="header">MENU NAVIGATION</li>
                 <li class="active"><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+                {% if is_granted('ROLE_AGENTRH') %} 
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-files-o"></i>
@@ -36,6 +29,7 @@
               <span class="label label-primary pull-right">5</span>
             </span>
                     </a>
+                    
                     <ul class="treeview-menu">
                        <li><a href="{{ path('parametrage_employe') }}"><i class="fa fa-circle-o"></i>Paramétrer Employé</a></li>
                         <li><a href="{{ path('parametrage_evaluation_index') }}"><i class="fa fa-circle-o"></i> Paramétrer Evaluation</a></li>
@@ -43,7 +37,9 @@
                         <li><a href="{{ path('parametrage_etatformation_index') }}"><i class="fa fa-circle-o"></i> Paramétrer Etat Formation</a></li>
                         <li><a href="{{ path('formateur_index') }}"><i class="fa fa-circle-o"></i> Paramétrer Formateur</a></li>
                     </ul>
+                   
                 </li>
+                 {% endif %}
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-pie-chart"></i>
@@ -53,7 +49,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ path('employe') }}"><i class="fa fa-circle-o"></i> Employés</a></li>
+                        {% if is_granted('ROLE_AGENTRH') %} 
+                            <li><a href="{{ path('employe') }}"><i class="fa fa-circle-o"></i> Employés</a></li>
+                        {% endif %}
                         <li ><a href="{{ path('statistique_employe') }}"><i class="fa fa-circle-o"></i>Statistiques</a></li>
                     </ul>
                 </li>
@@ -102,59 +100,232 @@
 
 {% block body %}
 
-    <div class="row">
-        <div class="align-content-center">
-            <br/>
-            <div class="col-md-12" align="center">
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Bienvenue  </h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class=""></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="2" class="active"></li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <div class="item">
-                                    <img src="http://placehold.it/900x500/39CCCC/ffffff&amp;text=SOLUTION+RH" alt="First slide">
-
-                                    <div class="carousel-caption">
-                                        First Slide
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <img src="http://placehold.it/900x500/3c8dbc/ffffff&amp;text=SOLUTION+RH" alt="Second slide">
-
-                                    <div class="carousel-caption">
-                                        Second Slide
-                                    </div>
-                                </div>
-                                <div class="item active">
-                                    <img src="http://placehold.it/900x500/f39c12/ffffff&amp;text=SOLUTION+RH" alt="Third slide">
-
-                                    <div class="carousel-caption">
-                                        Third Slide
-                                    </div>
-                                </div>
-                            </div>
-                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                                <span class="fa fa-angle-left"></span>
-                            </a>
-                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                                <span class="fa fa-angle-right"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
+<section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>{% for employe in employes %}	
+                        {{employe.nbre}}</h3>
+                    {% endfor %}
+                    <p>{% if(nbr > 1) %}
+                        Salariés
+                    {% else %}
+                        Salarié
+                    {% endif %}</p>
+                    
                 </div>
-                <!-- /.box -->
-            </div>
+            <div class="icon">
+              <i class="ion ion-person"></i>
         </div>
+            <a href="{{path('employe')}}" class="small-box-footer">Plus D'Infos <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+        
     </div>
+    <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+                <h3>{% for sexe in sexes %}	
+                        {{ sexe.nbre }}</h3>
+
+                <p>	
+                    {% if(sexe.nbre > 1) %}
+                        {{ sexe.sexe }}s
+                    {% else %}
+                        {{ sexe.sexe }}
+                    {% endif %}                
+                    </p>
+                    {% endfor %}
+               
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="{{ path('statistique_employe') }}" class="small-box-footer">Plus D'Infos <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>{% for femme in femmes %}	
+                        {{ femme.nbre }}</h3>
+
+              <p> {% if(femme.nbre > 1) %}
+                        {{ femme.sexe }}s
+                    {% else %}
+                        {{ femme.sexe }}
+                    {% endif %}        </p>
+              {% endfor %}
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="{{ path('statistique_employe') }}" class="small-box-footer">Plus D'Infos<i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>{{nbr}}</h3>
+
+              <p>
+               {% if(nbr > 1) %}
+                        Formations
+                    {% else %}
+                        Formation
+                    {% endif %}        
+              </p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="{{path('formation_index')}}" class="small-box-footer">Plus D'Infos<i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+<div class="col-md-6">
+			<div class="box box-primary">
+            	<div class="box-header with-border">
+					<h3 class="box-title">Nombres d'Employés par Catégorie</h3>
+
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+            </div>
+				<div class="box-body">
+					<canvas id="Chart3" width="400" height="240"></canvas>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+					<script>
+					var ctx = document.getElementById('Chart3').getContext('2d');
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type: 'doughnut',
+
+						// The data for our dataset
+						
+						data: {
+								
+							labels: [{% for categorieemploye in categorieemployes %}
+								"Categorie {{ categorieemploye.nomcategorieemploye }}",
+								
+								{% endfor %}
+								
+								
+								
+								],
+							
+							datasets: [{
+								label: "Catégorie Employé",
+								backgroundColor: ["#008080","#FF6347","#9ACD32",,"#B0C4DE",],
+											
+								data: [	{% for categorieemploye in categorieemployes %}
+								{{ categorieemploye.nbrem }},
+								
+								{% endfor %}
+									
+									
+									],					
+							}]
+							
+						},
+						
+						// Configuration options go here
+						options: {
+						       animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+
+    
+
+						}
+					});
+					</script>		
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="box box-success">
+            	<div class="box-header with-border">
+					<h3 class="box-title">Nombre d'Employé par nationalite</h3>
+
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+					</button>
+					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				</div>
+            </div>
+				<div class="box-body">
+					<canvas id="Chart4" width="400" height="240"></canvas>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+					<script>
+					var ctx = document.getElementById('Chart4').getContext('2d');
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type: 'pie',
+
+						// The data for our dataset
+						
+						data: {
+								
+							labels: [{% for nationalite in nationalites %}
+								"{{	nationalite.nomNationalite }}",
+								
+								{% endfor %}
+								
+								
+								
+								],
+							
+							datasets: [{
+								label: "Employe",
+								backgroundColor: ["#B0C4DE","#9ACD32","#008080","#B0C4DE","#FF6347"],
+											
+								data: [	
+									{% for nationalite in nationalites %}
+								{{	nationalite.nbrnat }},
+								
+								{% endfor %}
+									],					
+							}]
+							
+						},
+						
+						// Configuration options go here
+						options: {
+							legend: {
+            display: true,
+            
+        },
+		 title: {
+            display: false,
+            text: "Nombre D'Employés par Service",
+			fontSize: 16
+        },
+						        
+		animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+
+					
+    
+
+						}
+					});
+					</script>		
+				</div>
+			</div>
+		</div>
+</section>
+
+
 
 
 {% endblock %}

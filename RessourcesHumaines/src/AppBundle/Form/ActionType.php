@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+
 
 
 class ActionType extends AbstractType
@@ -19,7 +21,7 @@ class ActionType extends AbstractType
     {
         $builder
             ->add('nomAction',TextType::class, ['attr'=>['class' => 'form-control','placeholder'=>'Nom Action']])
-            ->add('coutAction',MoneyType::class, ['attr'=>['class' => 'form-control','placeholder'=>'Cout Action']])
+            ->add('coutAction',IntegerType::class, ['attr'=>['class' => 'form-control','placeholder'=>'Cout Action']])
         ;
     }
     

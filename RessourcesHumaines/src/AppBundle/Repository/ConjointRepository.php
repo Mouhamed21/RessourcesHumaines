@@ -27,7 +27,7 @@ class ConjointRepository extends \Doctrine\ORM\EntityRepository
     public function getConjoints(\AppBundle\Entity\Employe $employe)
     {
         $qb=$this->createQueryBuilder('c')
-            ->select('c.id','c.prenomConjoint','c.nomConjoint','c.dateNaissance','c.SituationMatrimoniale','c.raisonInactif',
+            ->select('c.id','c.prenomConjoint','c.nomConjoint','c.dateNaissance',
             'c.situationProfessionnelle', 'e.id as idemp')
             ->innerJoin('AppBundle:Employe', 'e', Join::WITH, 'e.id = c.employe')
             ->where('c.tag != 1')

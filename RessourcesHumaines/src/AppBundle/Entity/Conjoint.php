@@ -42,19 +42,7 @@ class Conjoint
      */
     private $dateNaissance;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="SituationMatrimoniale", type="string")
-     */
-    private $SituationMatrimoniale;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="raisonInactif", type="string", length=255)
-     */
-    private $raisonInactif;
+   
 
     /**
      * @var string
@@ -164,32 +152,6 @@ class Conjoint
         return $this->dateNaissance;
     }
 
-
-
-    /**
-     * Set raisonInactif
-     *
-     * @param string $raisonInactif
-     *
-     * @return Conjoint
-     */
-    public function setRaisonInactif($raisonInactif)
-    {
-        $this->raisonInactif = $raisonInactif;
-
-        return $this;
-    }
-
-    /**
-     * Get raisonInactif
-     *
-     * @return string
-     */
-    public function getRaisonInactif()
-    {
-        return $this->raisonInactif;
-    }
-
     /**
      * Set situationProfessionnelle
      *
@@ -213,35 +175,6 @@ class Conjoint
     {
         return $this->situationProfessionnelle;
     }
-
-
-
-   
-
-    /**
-     * Set situationMatrimoniale
-     *
-     * @param string $situationMatrimoniale
-     *
-     * @return Conjoint
-     */
-    public function setSituationMatrimoniale($situationMatrimoniale)
-    {
-        $this->SituationMatrimoniale = $situationMatrimoniale;
-
-        return $this;
-    }
-
-    /**
-     * Get situationMatrimoniale
-     *
-     * @return string
-     */
-    public function getSituationMatrimoniale()
-    {
-        return $this->SituationMatrimoniale;
-    }
-
     /**
      * Set tag
      *

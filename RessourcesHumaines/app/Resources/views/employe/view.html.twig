@@ -78,9 +78,9 @@
                                                         <a class="btn btn-primary"  data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="true" aria-controls="multiCollapseExample1"><span class="glyphicon glyphicon-eye-open"></span>
                                                             {% if(employe.sexe == 'Homme') %}
                                                                 {% if(conjoints >1) %}
-                                                                        Conjointes
+                                                                        Conjoints
                                                                 {% else %}
-                                                                        Conjointe
+                                                                        Conjoint
                                                                 {% endif %}
                                                             {% else %}
                                                                         Conjoint
@@ -114,16 +114,7 @@
                                                                     {{ form_widget(form7.dateNaissance) }}
 
                                                                 </div>
-                                                                <div class="form-group">
-                                                                    <label>Situation Matrimoniale</label>
-                                                                    {{ form_widget(form7.SituationMatrimoniale) }}
-
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label>Raison Inactif</label>
-                                                                    {{ form_widget(form7.raisonInactif) }}
-
-                                                                </div>
+                                                                
                                                                 <div class="form-group">
                                                                     <label>Situation Professionelle</label>
                                                                     {{ form_widget(form7.situationProfessionnelle) }}
@@ -164,8 +155,7 @@
                                                                                             <th>Nom</th>
                                                                                             <th>Prenom</th>
                                                                                             <th>Date de Naissance</th>
-                                                                                            <th>Situation Matrimoniale</th>
-                                                                                            <th>Raison Inactif</th>
+            
                                                                                             <th>Actions</th>
                                                                                         </tr>
                                                                                         </thead>
@@ -176,8 +166,7 @@
                                                                                                 <td> {{ conjoint1.prenomConjoint }}</td>
                                                                                                 <td> {{ conjoint1.nomConjoint }}  </td>
                                                                                                 <td>{{ conjoint1.dateNaissance | date("m/d/Y")}}</td>
-                                                                                                <td>{{ conjoint1.SituationMatrimoniale }}</td>
-                                                                                                <td>{{ conjoint1.raisonInactif }}</td>
+                                                                                              
                                                                                                 <td align="center">
 
                                                                                                     <a href="{{ path('update_conjoint',{'idemp':conjoint1.idemp, 'id':conjoint1.id }) }}" class="btn btn-success btn-sm">
@@ -220,7 +209,7 @@
                                                                                             </button>
                                                                                         </center>
                                                                                     {% else %}
-                                                                                        <h4>Vous avez atteint le nombre maximun de Coinjointes</h4>
+                                                                                        <h4>Vous avez atteint le nombre maximun de Coinjoints</h4>
                                                                                     {% endif %}
                                                                                 {% elseif(employe.sexe == 'Femme') %}
                                                                                     {% if(conjoints==0) %}

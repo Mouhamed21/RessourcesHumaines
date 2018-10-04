@@ -50,6 +50,57 @@ class EmployeRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+    public function findEmployeByHomme()
+    {
+        $qb=$this->createQueryBuilder('e')
+        ->select('count(e.id) as nbre','e.sexe','e.tag')
+        ->where('e.tag !=1')
+        ->andwhere("e.sexe='Homme'")
+        //->innerJoin('AppBundle:EtatFormation', 'ef', Join::WITH, 'ef.id = f.etatformation')
+        //->groupBy('e.s')
+        
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    public function findEmploye()
+    {
+        $qb=$this->createQueryBuilder('e')
+        ->select('count(e.id) as nbre','e.tag')
+        ->where('e.tag !=1')
+  
+        //->innerJoin('AppBundle:EtatFormation', 'ef', Join::WITH, 'ef.id = f.etatformation')
+        //->groupBy('e.s')
+        
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    public function findEmployeByFemme()
+    {
+        $qb=$this->createQueryBuilder('e')
+        ->select('count(e.id) as nbre','e.sexe','e.tag')
+        ->where('e.tag !=1')
+        ->andwhere("e.sexe='Femme'")
+        //->innerJoin('AppBundle:EtatFormation', 'ef', Join::WITH, 'ef.id = f.etatformation')
+        //->groupBy('e.s')
+        
+        ;
+
+        try {
+            return $qb ->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
     public function findEmployeBySituationMatrimoniale()
     {
         $qb=$this->createQueryBuilder('e')

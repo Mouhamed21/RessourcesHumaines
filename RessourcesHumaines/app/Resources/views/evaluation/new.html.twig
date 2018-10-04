@@ -23,8 +23,9 @@
         <a class="btn btn-primary" style="margin-bottom: 10px; margin-top:10px;" 
         href="{{ path('evaluation_index') }}">Retour</a>
     </div>
-
+{% if is_granted('ROLE_AGENTRH') %} 
             <h3>Création D'une Evaluation</h3>
+{% endif %}
 
             {{ form_start(form) }}
                 {{ form_widget(form) }}

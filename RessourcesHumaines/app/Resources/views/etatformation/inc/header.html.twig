@@ -31,6 +31,7 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
             <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+            {% if is_granted('ROLE_AGENTRH') %} 
             <li class="treeview active">
                 <a href="#">
                     <i class="fa fa-files-o"></i>
@@ -47,6 +48,7 @@
                     <li><a href="{{ path('formateur_index') }}"><i class="fa fa-circle-o"></i> Paramétrer Formateur</a></li>     
                 </ul>
             </li>
+            {% endif %}
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-pie-chart"></i>

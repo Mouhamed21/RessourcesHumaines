@@ -224,7 +224,7 @@ class FormationController extends Controller
     /**
      * Displays a form to edit an existing Formation entity.
      *
-     * @Route("/{id}/edit", name="formation_edit")
+     * @Route("/edit/{id}", name="formation_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Formation $formation)

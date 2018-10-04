@@ -17,9 +17,10 @@
 
 {% block body %}
 <section class="content">
-   
+   {% if is_granted('ROLE_AGENTRH') %} 
         <a href="{{ path('evaluation_new') }}" class="btn btn-primary" style="margin-bottom: 10px" 
         ><b>AJOUTER UNE EVALUATION</b></a>
+   {% endif %}
    
      <div class="row">
         <div class="col-xs-12">
@@ -52,9 +53,11 @@
                                   <a title="Détails" href="{{ path('evaluation_show', { 'id': evaluation.id }) }}" class="btn btn-primary btn-sm">
                                     <span class="glyphicon glyphicon-list"></span>
                                   </a>
+                                  {% if is_granted('ROLE_AGENTRH') %} 
                                   <a title="Modifier"  href="{{ path('evaluation_edit', { 'id': evaluation.id }) }}" class="btn btn-success btn-sm">
                                        <span class="glyphicon glyphicon-edit"></span></span>
                                   </a>
+                                  {% endif %}
                                   <a title="Soumètre à"  href="{{ path('evaluation_evaluationemploye_index', { 'id': evaluation.id }) }}" class="btn btn-facebook btn-sm">
                                        <span class="glyphicon glyphicon-new-window"></span>
                                   </a>

@@ -21,8 +21,10 @@
         <h1>LISTE DES FORMATIONS</h1>
     </div>
       <div class="col-lg-3 col-xs-6">
+      {% if is_granted('ROLE_AGENTRH') %}
                                 <a  href="{{ path('formation_new') }}" class="btn btn-primary"
                                  style="margin-bottom: 10px">CREER FORMATION</a>
+      {% endif %}
                         </div>
         <div class="col-xs-12">
             <div class="box box-primary">
@@ -52,13 +54,16 @@
                                 <td>{{ formation.lieuFomation }}</td>
                                 <td>{{ formation.nomtypeformation }}</td>
                                 <td>{{ formation.nometatformation }}</td>
-                                <td class="text-center">               
+                                <td class="text-center">  
+                                           
                                     <a href="{{ path('formation_show', { 'id': formation.id }) }}" class="btn btn-facebook btn-sm">
                                         <span class="glyphicon glyphicon-list"></span>
                                     </a>
+                                 {% if is_granted('ROLE_AGENTRH') %} 
                                     <a href="{{ path('formation_edit', { 'id': formation.id }) }}" class="btn btn-success btn-sm">
                                         <span class="glyphicon glyphicon-edit"></span>
-                                    </a>                              
+                                    </a>  
+                                {% endif %}                            
                                 </td>
                             </tr>
                         {% endfor %}
@@ -66,8 +71,10 @@
                     </table>
                 </div>
                         <div class="text-center">
+                         {% if is_granted('ROLE_AGENTRH') %} 
                                 <a title="Ajouter Une Formation" href="{{ path('formation_new') }}" class="btn btn-primary"
                                  style="margin-bottom: 10px"><span class="glyphicon glyphicon-plus"></span></a>
+                          {% endif %} 
                         </div>
         </div>
     </div>
